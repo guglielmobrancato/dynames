@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNAMES | Lettura Articolo</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --night-blue: #0b1120;
+            --slate-grey: #334155;
+            --light-grey: #f8fafc;
+            --optical-white: #ffffff;
+            --accent: #1e3a8a;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #cbd5e1;
+            --paper-bg: #fdfbf7;
+            --gold-accent: #b8935a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--paper-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .brand {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .serif-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--optical-white);
+            border-bottom: 2px solid var(--night-blue);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand h1 {
+            font-size: 1.8rem;
+            color: var(--night-blue);
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .brand p {
+            font-size: 0.65rem;
+            color: var(--slate-grey);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .desktop-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            color: var(--night-blue);
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: var(--gold-accent);
+        }
+
+        /* BACK BUTTON */
+        .back-nav {
+            padding: 2rem 0;
+        }
+
+        .back-nav a {
+            text-decoration: none;
+            color: var(--slate-grey);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .back-nav a:hover {
+            color: var(--gold-accent);
+        }
+
+        /* ARTICLE HEADER */
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .article-category {
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .article-title {
+            font-size: 3.5rem;
+            color: var(--night-blue);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .article-abstract {
+            font-size: 1.5rem;
+            color: var(--slate-grey);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            max-width: 90%;
+            margin: 0 auto 3rem auto;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--slate-grey);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+
+        .meta-author {
+            font-weight: 700;
+            color: var(--night-blue);
+        }
+
+        /* ARTICLE HERO IMAGE */
+        .article-hero {
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            object-fit: cover;
+            margin-bottom: 4rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ARTICLE BODY */
+        .article-body {
+            color: var(--text-primary);
+        }
+
+        .article-body p {
+            margin-bottom: 2rem;
+        }
+
+        .article-body h2 {
+            font-size: 2rem;
+            color: var(--night-blue);
+            margin: 3.5rem 0 1.5rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .article-body h3 {
+            font-size: 1.5rem;
+            color: var(--night-blue);
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .article-body ul {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.8rem;
+        }
+
+        .pull-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold-accent);
+            font-style: italic;
+            text-align: center;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            line-height: 1.3;
+            max-width: 90%;
+            position: relative;
+        }
+
+        .pull-quote::before {
+            content: "«";
+            font-size: 4rem;
+            color: rgba(184, 147, 90, 0.2);
+            position: absolute;
+            top: -2rem;
+            left: 0;
+            font-style: normal;
+        }
+
+        /* AUTHOR BOX */
+        .author-box {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--optical-white);
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--gold-accent);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .author-box img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-size: 1.2rem;
+            color: var(--night-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .author-info p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        footer {
+            background: var(--night-blue);
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 0.9rem;
+            margin-top: 6rem;
+        }
+
+        @media (max-width: 900px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .article-title {
+                font-size: 2.5rem;
+            }
+
+            .article-abstract {
+                font-size: 1.2rem;
+            }
+
+            .article-hero {
+                height: 40vh;
+            }
+
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .pull-quote {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="brand">
+                <a href="../index.html" style="text-decoration: none;">
+                    <h1>
+                        <img src="../assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" alt="DYNAMES Logo"
+                            class="brand-logo" onerror="this.style.display='none'">
+                        DYNAMES
+                    </h1>
+                    <p>Governance di Forze e Sistemi</p>
+                </a>
+            </div>
+            <nav class="desktop-nav">
+                <a href="../hub.html" class="active">Analisi & Articoli</a>
+                <a href="../eventi.html">Eventi</a>
+                <a href="index.html#governance">Chi Siamo</a>
+                <a href="../collaboratori.html">Collaboratori</a>
+                <a href="../osint-tools.html">OSINT Hub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container back-nav">
+        <a href="../hub.html">â† Torna all'Hub</a>
+    </div>
+
+    <!-- ARTICOLO -->
+    <article>
+        <div class="article-container article-header">
+            <span class="article-category">Analisi & Strategia</span>
+            <h1 class="serif-heading article-title">L’Immagine come Dominio: Il Cinema nella Guerra Cognitiva</h1>
+            <p class="article-abstract">Il cinema non è classificabile meramente come Soft Power, ma come un vettore di
+                Ingegneria Percettiva nel sesto dominio del conflitto.</p>
+
+            <div class="article-meta">
+                <span class="meta-author">Guglielmo Brancato</span>
+                <span>11 Marzo 2026</span>
+                <span>Tempo di lettura: 6 min</span>
+            </div>
+        </div>
+
+        <!-- IMMAGINE CORTA -->
+        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059&auto=format&fit=crop"
+            alt="Mediterraneo Strategico" class="article-hero">
+
+        <div class="article-container article-body">
+
+            <p><span
+                    style="font-size: 3rem; float: left; line-height: 1; padding-right: 0.8rem; font-family: 'Playfair Display', serif; color: var(--night-blue);">L</span>'analisi
+                dei sistemi complessi applicata alla sicurezza internazionale impone oggi il superamento della
+                distinzione classica tra "cultura" e "difesa". La Guerra Cognitiva (Cognitive Warfare) si definisce come
+                l'attacco metodico alle capacità neuro-cognitive e ai processi decisionali di una popolazione o di una
+                leadership, trasformando l'individuo stesso in un'arma e la mente umana nel sesto dominio del conflitto.
+                In questo spettro, il cinema non è classificabile meramente come Soft Power (persuasione), ma come un
+                vettore di Ingegneria Percettiva.</p>
+
+            <p>La delimitazione del campo d’indagine in questa rubrica per DYNAMES riguarda la funzione strategica del
+                prodotto audiovisivo inteso come infrastruttura di condizionamento dei processi euristici. L’analisi non
+                verterà sull’estetica, ma sulla capacità della narrazione filmica di agire come strumento di Controllo
+                Riflessivo: la pratica di trasmettere informazioni a un avversario (o a una popolazione alleata) per
+                indurlo a prendere decisioni che favoriscano gli interessi dell'attore egemone, pur percependole come
+                autonome.</p>
+
+            <h3>2. Genealogia storica e teorica: Dalle radici della propaganda alla Deterrenza Cognitiva</h3>
+            <p>Le radici filosofiche del cinema come arma risalgono alla dottrina sovietica della Agitprop e alla teoria
+                del montaggio di Ėjzenštejn, concepita come "collisione" psicologica per forgiare la coscienza
+                proletaria. Tuttavia, l'evoluzione verso l'attuale Architettura Narrativa si compie con l'integrazione
+                della psicologia comportamentale e delle neuroscienze nelle dottrine di sicurezza post-11 settembre.</p>
+            <p>La teoria della Deterrenza Cognitiva suggerisce che un sistema politico è sicuro solo finché la sua
+                popolazione possiede una "resilienza sistemica" contro le narrazioni destabilizzanti. Storicamente, il
+                cinema ha operato per decenni come garante della stabilità interna attraverso la Mobilitazione
+                Simbolica, creando un orizzonte di valori condivisi che rendono accettabili le decisioni di politica
+                estera e di difesa (es. il rapporto tra il Pentagono e le produzioni hollywoodiane).</p>
+
+            <h3>3. Architettura operativa: Meccanismi, attori e vettori sistemici</h3>
+            <p>L'efficacia del cinema nella guerra ibrida contemporanea risiede nella sua natura di "cavallo di Troia"
+                emotivo. I meccanismi operativi si articolano su tre livelli:</p>
+            <ul>
+                <li><strong>Vettori di Distribuzione (Saturazione):</strong> Le piattaforme di streaming globali
+                    agiscono come sistemi di distribuzione capillare che scavalcano i confini nazionali, erodendo la
+                    sovranità informativa degli Stati.</li>
+                <li><strong>Algoritmi e Micro-targeting:</strong> L'integrazione di Big Data e produzione
+                    cinematografica permette di calibrare i contenuti per rispondere a specifiche vulnerabilità
+                    psicologiche di gruppi sociali target, facilitando la polarizzazione o l'apatia politica.</li>
+                <li><strong>Ingegneria del Consenso (Framing):</strong> Attraverso la costruzione di scenari futuribili
+                    o storici (si pensi alle rappresentazioni del collasso climatico o della minaccia cyber), il cinema
+                    pre-condiziona il pubblico ad accettare misure di emergenza o cambiamenti paradigmatici nella spesa
+                    militare.</li>
+            </ul>
+            <div class="pull-quote">"L'attore che controlla l'immaginario cinematografico non si limita a intrattenere,
+                ma stabilisce i confini del 'pensabile' all'interno della decisione pubblica."</div>
+
+            <h3>4. Case study: Modelli geopolitici a confronto (USA, Cina, UE)</h3>
+            <p>L'analisi comparata rivela approcci divergenti alla sovranità narrativa:</p>
+            <ul>
+                <li><strong>Modello USA (Egemonia Integrata):</strong> Gli Stati Uniti mantengono un vantaggio
+                    asimmetrico attraverso una simbiosi organica tra industria dell'intrattenimento e apparato di
+                    sicurezza. Il cinema americano esporta non solo valori, ma protocolli di realtà, rendendo la
+                    tecnologia e la visione del mondo statunitense lo standard di default globale.</li>
+                <li><strong>Modello Cinese (Sovranità Dirigista):</strong> La RPC utilizza il cinema (es. The Battle at
+                    Lake Changjin) per una mobilitazione simbolica interna di massa, finalizzata a preparare la
+                    popolazione alla competizione strategica di lungo periodo. Qui il cinema è esplicitamente una branca
+                    della dottrina militare, volta alla coesione nazionalistica estrema.</li>
+                <li><strong>Modello UE (Vulnerabilità Frammentata):</strong> L'Europa appare come un terreno di
+                    conquista cognitiva. Priva di una narrazione strategica unitaria e dipendente da piattaforme
+                    esterne, l'UE subisce le architetture narrative altrui, con un conseguente rischio di erosione della
+                    propria autonomia decisionale e della resilienza delle proprie istituzioni.</li>
+            </ul>
+
+            <h3>5. Vulnerabilità e limiti: Single points of failure</h3>
+            <p>Il principale rischio sistemico risiede nella Saturazione Cognitiva. Un eccesso di stimoli narrativi
+                contraddittori produce "rumore cognitivo", che porta alla paralisi decisionale o al disimpegno civico.
+            </p>
+            <p>Un altro single point of failure è la dipendenza tecnologica: la produzione di contenuti cinematografici
+                ad alto impatto (CGI, Deepfake, Virtual Production) dipende oggi da una supply chain di semiconduttori e
+                infrastrutture cloud concentrate in poche mani. Una compromissione di questi asset tecnologici
+                renderebbe impossibile la proiezione di potenza narrativa, lasciando il fianco scoperto a narrazioni
+                ostili prodotte via AI.</p>
+
+            <h3>6. Implicazioni strategiche future: Deterrenza e Resilienza</h3>
+            <p>In un futuro dominato da realtà aumentata e intelligenza artificiale generativa, la capacità di
+                distinguere tra segnale e rumore sarà l'asset di sicurezza più prezioso. La sovranità nazionale
+                dipenderà dalla capacità degli Stati di sviluppare una propria Deterrenza Narrativa, capace di
+                intercettare e neutralizzare le operazioni di influenza prima che queste raggiungano la massa critica
+                nel corpo sociale.</p>
+            <p>DYNAMES si pone l'obiettivo di fornire le categorie analitiche per questa sfida. Scrivere di cinema e
+                tecnologia in termini di guerra cognitiva su questa piattaforma significa offrire ai decisori pubblici
+                una mappa per orientarsi in un conflitto dove il campo di battaglia è la percezione della realtà stessa.
+            </p>
+
+            <h3>7. Conclusione sintetica</h3>
+            <p>La tesi centrale di questa rubrica è che la stabilità delle comunità politiche non è più garantita
+                esclusivamente dal controllo del territorio o dell'economia, ma dalla capacità di presidiare
+                l'architettura cognitiva dei propri cittadini. DYNAMES rappresenta l'avamposto analitico necessario per
+                decodificare il cinema come sistema d'arma non convenzionale, essenziale per la tutela della decisione
+                pubblica e della continuità istituzionale in un'epoca di competizione ibrida permanente.</p>
+
+            <h4 style="margin-top: 3rem; color: var(--slate-grey);">Fonti e Bibliografia di Riferimento:</h4>
+            <ul style="font-size: 0.9rem; color: var(--slate-grey);">
+                <li>NATO Joint Warfare Centre (2020), "Cognitive Warfare".</li>
+                <li>Lefebvre, V. A., "Reflexive Control: The Soviet Concept of Influencing an Adversary’s
+                    Decision-Making".</li>
+                <li>Bernays, E., "Propaganda" (Rivisitatione in chiave Big Data).</li>
+            </ul>
+
+            <!-- AUTHOR BIO -->
+            <div class="author-box">
+                <img src="../assets/io%20giacca%20blu.png" alt="Guglielmo Brancato"
+                    onerror="this.style.display='none';">
+                <div class="author-info">
+                    <h4>Guglielmo Brancato</h4>
+                    <p>Technology Advisor di DYNAMES. Produttore cinematografico. Analizza l'intersezione tra propaganda
+                        culturale, narrazioni cinematografiche e nuove minacce ibride.</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <div class="container">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: 1px;">DYNAMES</h3>
+            <p>Iscrizione Registro degli Operatori di Comunicazione e Postali n° 44335 a favore di FONDAZIONE BOSCACCI
+                ETS</p>
+            <p style="margin-top: 1rem; color: var(--slate-grey);">&copy; 2026 DYNAMES. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

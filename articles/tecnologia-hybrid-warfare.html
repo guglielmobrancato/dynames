@@ -1,0 +1,504 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNAMES | Lettura Articolo</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --night-blue: #0b1120;
+            --slate-grey: #334155;
+            --light-grey: #f8fafc;
+            --optical-white: #ffffff;
+            --accent: #1e3a8a;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #cbd5e1;
+            --paper-bg: #fdfbf7;
+            --gold-accent: #b8935a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--paper-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .brand {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .serif-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--optical-white);
+            border-bottom: 2px solid var(--night-blue);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand h1 {
+            font-size: 1.8rem;
+            color: var(--night-blue);
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .brand p {
+            font-size: 0.65rem;
+            color: var(--slate-grey);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .desktop-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            color: var(--night-blue);
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: var(--gold-accent);
+        }
+
+        /* BACK BUTTON */
+        .back-nav {
+            padding: 2rem 0;
+        }
+
+        .back-nav a {
+            text-decoration: none;
+            color: var(--slate-grey);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .back-nav a:hover {
+            color: var(--gold-accent);
+        }
+
+        /* ARTICLE HEADER */
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .article-category {
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .article-title {
+            font-size: 3.5rem;
+            color: var(--night-blue);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .article-abstract {
+            font-size: 1.5rem;
+            color: var(--slate-grey);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            max-width: 90%;
+            margin: 0 auto 3rem auto;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--slate-grey);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+
+        .meta-author {
+            font-weight: 700;
+            color: var(--night-blue);
+        }
+
+        /* ARTICLE HERO IMAGE */
+        .article-hero {
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            object-fit: cover;
+            margin-bottom: 4rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ARTICLE BODY */
+        .article-body {
+            color: var(--text-primary);
+        }
+
+        .article-body p {
+            margin-bottom: 2rem;
+        }
+
+        .article-body h2 {
+            font-size: 2rem;
+            color: var(--night-blue);
+            margin: 3.5rem 0 1.5rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .article-body h3 {
+            font-size: 1.5rem;
+            color: var(--night-blue);
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .article-body ul {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.8rem;
+        }
+
+        .pull-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold-accent);
+            font-style: italic;
+            text-align: center;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            line-height: 1.3;
+            max-width: 90%;
+            position: relative;
+        }
+
+        .pull-quote::before {
+            content: "«";
+            font-size: 4rem;
+            color: rgba(184, 147, 90, 0.2);
+            position: absolute;
+            top: -2rem;
+            left: 0;
+            font-style: normal;
+        }
+
+        /* AUTHOR BOX */
+        .author-box {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--optical-white);
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--gold-accent);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .author-box img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-size: 1.2rem;
+            color: var(--night-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .author-info p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        footer {
+            background: var(--night-blue);
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 0.9rem;
+            margin-top: 6rem;
+        }
+
+        @media (max-width: 900px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .article-title {
+                font-size: 2.5rem;
+            }
+
+            .article-abstract {
+                font-size: 1.2rem;
+            }
+
+            .article-hero {
+                height: 40vh;
+            }
+
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .pull-quote {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="brand">
+                <a href="../index.html" style="text-decoration: none;">
+                    <h1>
+                        <img src="../assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" alt="DYNAMES Logo"
+                            class="brand-logo" onerror="this.style.display='none'">
+                        DYNAMES
+                    </h1>
+                    <p>Governance di Forze e Sistemi</p>
+                </a>
+            </div>
+            <nav class="desktop-nav">
+                <a href="../hub.html" class="active">Analisi & Articoli</a>
+                <a href="../eventi.html">Eventi</a>
+                <a href="index.html#governance">Chi Siamo</a>
+                <a href="../collaboratori.html">Collaboratori</a>
+                <a href="../osint-tools.html">OSINT Hub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container back-nav">
+        <a href="../hub.html">â† Torna all'Hub</a>
+    </div>
+
+    <!-- ARTICOLO -->
+    <article>
+        <div class="article-container article-header">
+            <span class="article-category">Tech & Sicurezza Globale</span>
+            <h1 class="serif-heading article-title">Il Primato Tecnologico nell’Analisi della Hybrid Warfare</h1>
+            <p class="article-abstract">L'Architettura Digitale della Decisione Strategica: la tecnologia non è un
+                semplice moltiplicatore di forze, ma la sostanza stessa del dominio conteso.</p>
+
+            <div class="article-meta">
+                <span class="meta-author">Guglielmo Brancato</span>
+                <span>11 Marzo 2026</span>
+                <span>Tempo di lettura: 6 min</span>
+            </div>
+        </div>
+
+        <!-- IMMAGINE CORTA -->
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop"
+            alt="Mediterraneo Strategico" class="article-hero">
+
+        <div class="article-container article-body">
+
+            <p><span
+                    style="font-size: 3rem; float: left; line-height: 1; padding-right: 0.8rem; font-family: 'Playfair Display', serif; color: var(--night-blue);">N</span>ell'attuale
+                paradigma della Hybrid Warfare, la tecnologia non è un semplice moltiplicatore di forze, ma la sostanza
+                stessa del dominio conteso. Se la guerra ibrida si gioca nelle "zone grigie" – al di sotto della soglia
+                del conflitto armato convenzionale – la tecnologia ne costituisce l'ossatura logica e operativa. In
+                questa analisi per DYNAMES, definiamo la tecnologia come l'insieme di infrastrutture critiche,
+                protocolli crittografici e algoritmi di apprendimento che determinano la capacità di uno Stato di
+                esercitare la propria Sovranità Digitale. L'intelligence moderna non può prescindere dalla comprensione
+                dei sistemi complessi, poiché ogni vulnerabilità tecnologica si traduce immediatamente in una
+                vulnerabilità politica e decisionale.</p>
+
+            <h3>2. Genealogia storica e teorica: Dalla Signal Intelligence (SIGINT) alla Cognitive Tech-War</h3>
+            <p>Storicamente, l'intelligence tecnologica si limitava all'intercettazione e alla decodifica (da Enigma
+                alla Guerra Fredda). Tuttavia, la transizione verso la Guerra Ibrida ha spostato il baricentro verso la
+                manipolazione dei dati e l'offesa cibernetica. La dottrina della "Guerra di Quinta Generazione" postula
+                che la tecnologia non serva più solo a distruggere il nemico, ma a paralizzarne la volontà attraverso la
+                Saturazione Informativa. La teoria della "resilienza sistemica" nasce proprio dalla necessità di
+                proteggere i nodi tecnologici che garantiscono la continuità delle istituzioni democratiche di fronte a
+                minacce asimmetriche.</p>
+
+            <h3>3. Architettura operativa: I quattro pilastri della Tech-Intelligence</h3>
+            <p>L'analisi di DYNAMES si focalizza su quattro vettori tecnologici che definiscono l'efficacia
+                dell'intelligence contemporanea:</p>
+            <ul>
+                <li><strong>Computing ad Alte Prestazioni (HPC) e Quantum:</strong> La capacità di calcolo determina la
+                    velocità di decodifica dei segnali ostili. Chi detiene la supremazia quantistica può rendere
+                    obsoleti i protocolli di sicurezza dell'avversario, creando un breakout strategico.</li>
+                <li><strong>Intelligenza Artificiale Generativa e Predittiva:</strong> Strumenti essenziali per
+                    l'analisi di masse di dati (Big Data) e per l'individuazione di modelli di attacco ibrido (pattern
+                    recognition) prima che diventino cinetici.</li>
+                <li><strong>Infrastrutture di Connettività(5G/6G e Satelliti):</strong> Il controllo fisico e logico dei
+                    flussi di dati rappresenta la moderna "linea del fronte". Una supply chain compromessa in questi
+                    settori equivale a una cessione di sovranità nazionale.</li>
+                <li><strong>Cyber-Physical Systems (CPS):</strong> L'integrazione tra software e infrastrutture fisiche
+                    (reti elettriche, idriche, trasporti) trasforma la tecnologia in un potenziale vettore di sabotaggio
+                    su vasta scala, tipico della dottrina del caos controllato.</li>
+            </ul>
+
+            <h3>4. Case study: Modelli di integrazione tecnologica e intelligence</h3>
+            <ul>
+                <li><strong>Il Modello USA (Silicon Valley-Pentagono):</strong> Un'integrazione pubblico-privata che
+                    mira alla "Dominanza Informativa". La tecnologia è utilizzata per creare una rete di sorveglianza e
+                    deterrenza globale, dove l'intelligence è proattiva e basata sulla superiorità del silicio.</li>
+                <li><strong>Il Modello Cinese (Fusione Civile-Militare):</strong> Pechino utilizza la tecnologia come
+                    strumento di controllo sociale interno e proiezione di influenza esterna (Digital Silk Road).
+                    L'intelligence è fusa con lo sviluppo industriale, rendendo ogni esportazione tecnologica un
+                    potenziale sensore di raccolta dati.</li>
+                <li><strong>L'Europa e la "Terza Via" di DYNAMES:</strong> In un contesto di dipendenza tecnologica da
+                    attori extra-UE, l'analisi strategica europea deve concentrarsi sulla Resilienza Cibernetica e sulla
+                    difesa delle supply chain critiche per evitare il "ricatto tecnologico".</li>
+            </ul>
+
+            <div class="pull-quote">"Se i sistemi di comando e controllo (C2) di una nazione poggiano su tecnologie
+                proprietarie straniere, la sovranità decisionale è un'illusione."</div>
+
+            <h3>5. Vulnerabilità e limiti: I Single Points of Failure della modernità</h3>
+            <p>Il rischio sistemico più elevato è rappresentato dalla dipendenza tecnologica asimmetrica. Altre
+                vulnerabilità includono:</p>
+            <ul>
+                <li><strong>Avvelenamento dei Dati (Data Poisoning):</strong> Manipolare gli input degli algoritmi di
+                    intelligence per indurre i decisori a conclusioni errate.</li>
+                <li><strong>Obsolescenza dei sistemi di difesa:</strong> La velocità dell'innovazione tecnologica rende
+                    i cicli di acquisizione militare tradizionali troppo lenti, creando finestre di vulnerabilità
+                    sfruttate dagli attori della guerra ibrida.</li>
+            </ul>
+
+            <h3>6. Implicazioni strategiche future: Perché DYNAMES è la risposta</h3>
+            <p>In questo scenario, DYNAMES non si limita a descrivere la tecnologia, ma la analizza come variabile
+                indipendente della stabilità politica. Supportare DYNAMES significa:</p>
+            <ul>
+                <li><strong>Anticipare il "Punto di Rottura":</strong> Identificare dove la pressione tecnologica
+                    (cyber-attacchi, disinformazione assistita da AI) può causare il collasso delle istituzioni.</li>
+                <li><strong>Definire la Deterrenza Digitale:</strong> Elaborare dottrine che rendano troppo costoso o
+                    inefficace l'attacco ibrido contro le nostre infrastrutture.</li>
+                <li><strong>Formare la Classe Dirigente:</strong> Fornire ai vertici militari e civili il lessico
+                    tecnico necessario per governare la complessità senza cadere in riduzionismi o facili entusiasmi
+                    tecnocratici.</li>
+            </ul>
+
+            <h3>7. Conclusione sintetica</h3>
+            <p>La tecnologia è il terreno su cui si vince o si perde la sfida della sicurezza nazionale nel XXI secolo.
+                DYNAMES è la "causa giusta" perché colma il vuoto tra l'innovazione tecnica pura e la decisione politica
+                strategica. Senza un'analisi rigorosa e non ideologica dei sistemi tecnologici, lo Stato rimane cieco di
+                fronte alle minacce ibride. DYNAMES rappresenta la lente necessaria per riacquisire una visione chiara e
+                difendere la continuità delle nostre comunità politiche nell'era della guerra cognitiva e digitale.</p>
+
+            <h4 style="margin-top: 3rem; color: var(--slate-grey);">Fonti e Bibliografia di Riferimento:</h4>
+            <ul style="font-size: 0.9rem; color: var(--slate-grey);">
+                <li>NATO Cooperative Cyber Defence Centre of Excellence (CCDCOE), "Tallinn Manual 2.0".</li>
+                <li>European Union Agency for Cybersecurity (ENISA), "Threat Landscape for 2025".</li>
+                <li>Kauffman, S., "At Home in the Universe: The Search for the Laws of Self-Organization and
+                    Complexity".</li>
+            </ul>
+
+            <!-- AUTHOR BIO -->
+            <div class="author-box">
+                <img src="../assets/io%20giacca%20blu.png" alt="Guglielmo Brancato"
+                    onerror="this.style.display='none';">
+                <div class="author-info">
+                    <h4>Guglielmo Brancato</h4>
+                    <p>Technology Advisor di DYNAMES. Produttore cinematografico. Analizza l'intersezione tra propaganda
+                        culturale, narrazioni cinematografiche e nuove minacce ibride.</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <div class="container">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: 1px;">DYNAMES</h3>
+            <p>Iscrizione Registro degli Operatori di Comunicazione e Postali n° 44335 a favore di FONDAZIONE BOSCACCI
+                ETS</p>
+            <p style="margin-top: 1rem; color: var(--slate-grey);">&copy; 2026 DYNAMES. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
