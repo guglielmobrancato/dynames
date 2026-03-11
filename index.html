@@ -373,6 +373,25 @@
         }
 
         @media (max-width: 900px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .container,
+            section {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+                box-sizing: border-box;
+            }
+
+            p,
+            ul,
+            ol {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                word-wrap: break-word;
+            }
+
             .menu-toggle {
                 display: flex;
             }
