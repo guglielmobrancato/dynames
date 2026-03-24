@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 
 <head>
@@ -519,6 +519,21 @@
             animation: loaderFade 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
     </style>
+
+    <!-- Favicon and SEO -->
+    <link rel="icon" href="assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" type="image/png">
+    <meta property="og:title" content="DYNAMES | Governance di Forze e Sistemi">
+    <meta property="og:image" content="https://dynames.it/assets/logo%20DYNAMES%20positivo%20-%20quadrato.png">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DYNAMES",
+      "url": "https://dynames.it/",
+      "logo": "https://dynames.it/assets/logo%20DYNAMES%20positivo%20-%20quadrato.png"
+    }
+    </script>
 </head>
 
 <body>
@@ -550,7 +565,7 @@
                 <a href="hub.html">Analisi & Articoli</a>
                 <a href="eventi.html">Eventi</a>
                 <a href="chi-siamo.html">Chi Siamo</a>
-                <a href="Temi e Collaborazioni.html">Temi e Collaborazioni</a>
+                <a href="temi-e-collaborazioni.html">Temi e Collaborazioni</a>
                 <a href="osint-tools.html">OSINT Hub</a>
             </nav>
         </div>
@@ -593,12 +608,94 @@
 
 
 
-    <section id="hub" style="background: var(--optical-white);">
+    <style>
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: 280px;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .hub-grid-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .hub-grid-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+        .hub-grid-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(11, 17, 32, 0.95) 0%, rgba(11, 17, 32, 0.4) 50%, rgba(11, 17, 32, 0.1) 100%);
+            z-index: 1;
+        }
+        .hub-grid-card img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transition: transform 0.7s ease;
+        }
+        .hub-grid-card:hover img {
+            transform: scale(1.08);
+        }
+        .hub-grid-card h3 {
+            position: relative;
+            z-index: 2;
+            color: var(--optical-white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .item-news { grid-column: span 1; grid-row: span 2; }
+        .item-pubblicazioni { grid-column: span 1; }
+        .item-analisi { grid-column: span 1; }
+        .item-eventi { grid-column: span 2; height: 260px; }
+        
+        @media (max-width: 900px) {
+            .hub-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 240px;
+            }
+            .item-news, .item-pubblicazioni, .item-analisi, .item-eventi {
+                grid-column: span 1;
+                grid-row: span 1;
+                height: 100%;
+            }
+        }
+    </style>
+    <section id="hub" style="background: var(--optical-white); padding-bottom: 5rem;">
         <div class="container">
-            <h2 class="section-title">Digital Hub: Analisi & Articoli</h2>
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="hub.html" class="btn" style="background: var(--night-blue); color: var(--optical-white);">
-                    Vai ad Analisi & Articoli
+            <h2 class="section-title">Esplora il Mondo Dynames</h2>
+            <div class="hub-grid">
+                <a href="hub.html?category=News" class="hub-grid-card item-news">
+                    <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80" alt="News">
+                    <h3>News</h3>
+                </a>
+                <a href="hub.html?category=Pubblicazioni" class="hub-grid-card item-pubblicazioni">
+                    <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80" alt="Pubblicazioni">
+                    <h3>Pubblicazioni</h3>
+                </a>
+                <a href="hub.html" class="hub-grid-card item-analisi">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80" alt="Analisi e Articoli">
+                    <h3>Analisi e Articoli</h3>
+                </a>
+                <a href="eventi.html" class="hub-grid-card item-eventi">
+                    <img src="assets/camera%20dei%20deputati.jpg" alt="Eventi">
+                    <h3>Eventi</h3>
                 </a>
             </div>
         </div>
@@ -608,12 +705,13 @@
         <h2 class="section-title">Eventi & Roadshow</h2>
         <div class="grid-2">
             <div>
-                <div
-                    style="margin-bottom: 2rem; border-radius: 8px; overflow: hidden; height: 400px; width: 100%; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
-                    <img src="assets/camera%20dei%20deputati.jpg" alt="Locandina Prossimo Evento"
-                        style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
+                <h3 style="font-size: 1.8rem; color: var(--night-blue); margin-bottom: 2rem;">Programmazione ed Archivio</h3>
                 <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Ottobre 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Senato della Repubblica</h3>
+                        <p>Premio Cultura della Difesa ed esposizione strategica.</p>
+                    </div>
                     <div class="timeline-item">
                         <div class="timeline-date">Maggio 2026</div>
                         <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Camera dei Deputati</h3>
@@ -621,12 +719,22 @@
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-date">Ottobre 2026</div>
-                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Senato della Repubblica</h3>
-                        <p>Premio Cultura della Difesa ed esposizione strategica.</p>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Campus LUISS - The Dome</h3>
+                        <p>Leadership, Etica e Formazione. Con la partecipazione di Capi di Stato Maggiore e accademici.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Marzo 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Sala delle Colonne</h3>
+                        <p>Cultura della Difesa: Comunicazione, Geopolitica, Formazione per l'Interesse Nazionale.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Gennaio 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Centro Studi Geopolitica</h3>
+                        <p>Seminario: Intelligence & Cognitive Warfare. Analisi delle metodologie di ingerenza esterna.</p>
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" style="height: fit-content;">
                 <h3>Ciclo Biennale di Confronto</h3>
                 <p>Partecipazione attiva ai 22 temi strategici del piano editoriale DYNAMES, strutturando tavoli di
                     lavoro chiusi per l'analisi e lo sviluppo di policy paper condivise tra settore pubblico e privato.

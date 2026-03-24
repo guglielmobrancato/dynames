@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 
 <head>
@@ -405,6 +405,21 @@
             }
         }
     </style>
+
+    <!-- Favicon and SEO -->
+    <link rel="icon" href="assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" type="image/png">
+    <meta property="og:title" content="DYNAMES | Governance di Forze e Sistemi">
+    <meta property="og:image" content="https://dynames.it/assets/logo%20DYNAMES%20positivo%20-%20quadrato.png">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DYNAMES",
+      "url": "https://dynames.it/",
+      "logo": "https://dynames.it/assets/logo%20DYNAMES%20positivo%20-%20quadrato.png"
+    }
+    </script>
 </head>
 
 <body>
@@ -425,7 +440,7 @@
                 <a href="hub.html" class="active">Analisi & Articoli</a>
                 <a href="eventi.html">Eventi</a>
                 <a href="chi-siamo.html">Chi Siamo</a>
-                <a href="Temi e Collaborazioni.html">Temi e Collaborazioni</a>
+                <a href="temi-e-collaborazioni.html">Temi e Collaborazioni</a>
                 <a href="osint-tools.html">OSINT Hub</a>
             </nav>
         </div>
@@ -464,7 +479,7 @@
         <!-- STANDARD ARTICLES GRID -->
         <h3
             style="font-size: 1.8rem; color: var(--night-blue); margin-bottom: 3rem; border-left: 4px solid var(--gold-accent); padding-left: 1rem;">
-            Ultimi Dossier</h3>
+            Articoli</h3>
 
         <div class="hub-layout">
             <!-- Colonna Articoli -->
@@ -529,6 +544,9 @@
                     <h4>Le Rubriche</h4>
                     <ul id="categoryFilter">
                         <li><button data-filter="all" class="active-filter">Tutte le Rubriche</button></li>
+                        <li><button data-filter="News">News</button></li>
+                        <li><button data-filter="Articoli">Articoli</button></li>
+                        <li><button data-filter="Pubblicazioni">Pubblicazioni</button></li>
                         <li><button data-filter="Istituzioni, sicurezza e ordine internazionale">1. Istituzioni,
                                 sicurezza e ordine internazionale</button></li>
                         <li><button data-filter="Economia, industria e risorse strategiche">2. Economia, industria e
