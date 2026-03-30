@@ -1,507 +1,218 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
-
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFL8MJSKVJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DYNAMES | Eventi</title>
 
-      gtag('config', 'G-DFL8MJSKVJ');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DYNAMES | Eventi & Roadmap</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --night-blue: #0b1120;
-            --slate-grey: #334155;
-            --light-grey: #f8fafc;
-            --optical-white: #ffffff;
-            --accent: #1e3a8a;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-light: #cbd5e1;
-            --paper-bg: #fdfbf7;
-            --gold-accent: #b8935a;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+:root {
+    --night-blue:#0b1120;
+    --gold:#b8935a;
+    --text:#475569;
+    --bg:#fdfbf7;
+}
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--paper-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
+body {
+    margin:0;
+    font-family:Roboto;
+    background:var(--bg);
+}
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .brand {
-            font-family: 'Montserrat', sans-serif;
-        }
+.container {
+    max-width:1200px;
+    margin:auto;
+    padding:2rem;
+}
 
-        .serif-heading {
-            font-family: 'Playfair Display', serif;
-        }
+.upcoming-event {
+    display:flex;
+    border-left:6px solid var(--gold);
+    background:#fff;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+.event-date-box {
+    background:var(--night-blue);
+    color:#fff;
+    padding:2rem;
+    text-align:center;
+}
 
-        /* HEADER */
-        header {
-            background-color: var(--optical-white);
-            border-bottom: 2px solid var(--night-blue);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+.event-details {
+    display:flex;
+    gap:2rem;
+    padding:2rem;
+}
 
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.event-poster-thumb {
+    width:200px;
+    height:300px;
+    object-fit:cover;
+    cursor:pointer;
+    border-radius:6px;
+}
 
-        .brand h1 {
-            font-size: 1.8rem;
-            color: var(--night-blue);
-            font-weight: 800;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.event-poster-caption {
+    text-align:center;
+    font-size:0.7rem;
+    margin-top:5px;
+}
 
-        .brand-logo {
-            height: 40px;
-            width: auto;
-        }
+/* ARCHIVIO */
+.past-event-row {
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:2rem;
+    margin-bottom:3rem;
+}
 
-        .brand p {
-            font-size: 0.65rem;
-            color: var(--slate-grey);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            margin-top: 2px;
-        }
+.past-event-image img {
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    border-radius:6px;
+}
 
-        .desktop-nav {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
+/* LIGHTBOX */
+.lightbox {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+}
 
-        .desktop-nav a {
-            text-decoration: none;
-            color: var(--night-blue);
-            font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
+.lightbox img {
+    max-width:90%;
+    max-height:90%;
+}
 
-        .desktop-nav a:hover,
-        .desktop-nav a.active {
-            color: var(--gold-accent);
-        }
+.lightbox.active {
+    display:flex;
+}
 
-        /* PAGE HEADER */
-        .page-header {
-            background-color: var(--night-blue);
-            color: var(--optical-white);
-            padding: 6rem 0;
-            text-align: center;
-            border-bottom: 8px solid var(--gold-accent);
-            background-image: linear-gradient(rgba(11, 17, 32, 0.8), rgba(11, 17, 32, 0.9)), url('https://images.unsplash.com/photo-1540317580384-e5d43867caa6?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-        }
+.close {
+    position:absolute;
+    top:20px;
+    right:20px;
+    font-size:2rem;
+    color:white;
+    cursor:pointer;
+}
 
-        .page-header h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-
-        .page-header p {
-            font-size: 1.2rem;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* EVENTS SECTION */
-        .events-content {
-            padding: 5rem 0;
-        }
-
-        .upcoming-event {
-            background: var(--optical-white);
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            display: flex;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 5rem;
-            overflow: hidden;
-            border-left: 6px solid var(--gold-accent);
-        }
-
-        .event-date-box {
-            background: var(--night-blue);
-            color: var(--optical-white);
-            padding: 3rem 2rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-width: 200px;
-        }
-
-        .event-date-box .day {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--gold-accent);
-        }
-
-        .event-date-box .month {
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-        }
-
-        .event-date-box .year {
-            font-size: 1.2rem;
-            color: var(--text-light);
-        }
-
-        .event-details {
-            padding: 4rem;
-            flex-grow: 1;
-        }
-
-        .event-badge {
-            display: inline-block;
-            background: var(--gold-accent);
-            color: var(--optical-white);
-            padding: 0.3rem 1rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 50px;
-            margin-bottom: 1.5rem;
-        }
-
-        .upcoming-event h2 {
-            font-size: 2.5rem;
-            color: var(--night-blue);
-            margin-bottom: 1rem;
-        }
-
-        .event-location {
-            font-size: 1.1rem;
-            color: var(--slate-grey);
-            font-style: italic;
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .event-location::before {
-            content: "ðŸ“";
-            font-style: normal;
-        }
-
-        .upcoming-event p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--night-blue);
-            color: var(--optical-white);
-            padding: 1rem 2.5rem;
-            text-decoration: none;
-            font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            border: 1px solid var(--night-blue);
-        }
-
-        .btn:hover {
-            background-color: var(--optical-white);
-            color: var(--night-blue);
-        }
-
-        /* PAST EVENTS */
-        .past-events-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .past-event-card {
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 2rem;
-        }
-
-        .past-event-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 1rem;
-        }
-
-        .past-event-card h3 {
-            font-size: 1.4rem;
-            color: var(--night-blue);
-        }
-
-        .past-event-date {
-            color: var(--gold-accent);
-            font-weight: 700;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-        }
-
-        .past-event-card p {
-            color: var(--text-secondary);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.05rem;
-        }
-
-        footer {
-            background: var(--night-blue);
-            color: var(--text-light);
-            text-align: center;
-            padding: 3rem 0;
-            font-size: 0.9rem;
-            margin-top: 4rem;
-        }
-
-        @media (max-width: 900px) {
-            body {
-                overflow-x: hidden;
-            }
-
-            .container,
-            section {
-                padding-left: 1.5rem !important;
-                padding-right: 1.5rem !important;
-                box-sizing: border-box;
-            }
-
-            p,
-            ul,
-            ol {
-                padding-left: 0.5rem;
-                padding-right: 0.5rem;
-                word-wrap: break-word;
-            }
-
-            .upcoming-event {
-                flex-direction: column;
-            }
-
-            .event-date-box {
-                padding: 2rem;
-                flex-direction: row;
-                align-items: baseline;
-                gap: 1rem;
-            }
-
-            .event-date-box .day {
-                font-size: 2.5rem;
-            }
-
-            .event-details {
-                padding: 2rem;
-            }
-
-            .past-events-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .desktop-nav {
-                display: none;
-            }
-
-            .page-header h1 {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
-
-    <!-- Favicon and SEO -->
-    <link rel="icon" href="assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" type="image/png">
-    <meta property="og:title" content="DYNAMES | Governance di Forze e Sistemi">
-    <meta property="og:image" content="https://dynames.it/assets/logo%20DYNAMES%20positivo%20-%20quadrato.png">
-    <meta property="og:type" content="website">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "DYNAMES",
-      "url": "https://dynames.it/",
-      "logo": "https://dynames.it/assets/logo%20DYNAMES%20positivo%20-%20quadrato.png"
+/* MOBILE */
+@media(max-width:900px){
+    .past-event-row{
+        grid-template-columns:1fr;
     }
-    </script>
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <div class="container header-inner">
-            <div class="brand">
-                <a href="index.html" style="text-decoration: none;">
-                    <h1>
-                        <img src="assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" alt="DYNAMES Logo"
-                            class="brand-logo" onerror="this.style.display='none'">
-                        DYNAMES
-                    </h1>
-                    <p>Governance di Forze e Sistemi</p>
-                </a>
-            </div>
-            <nav class="desktop-nav">
-                <a href="hub.html">Analisi & Articoli</a>
-                <a href="eventi.html" class="active">Eventi</a>
-                <a href="chi-siamo.html">Chi Siamo</a>
-                <a href="temi-e-collaborazioni.html">Temi e Collaborazioni</a>
-                <a href="osint-tools.html">OSINT Hub</a>
-            </nav>
-        </div>
-    </header>
+<div class="container">
 
-    <div class="page-header">
-        <div class="container">
-            <h1>Roadmap & Eventi</h1>
-            <p>"Il confronto pubblico e istituzionale sulle traiettorie sistemiche."</p>
-        </div>
-    </div>
+<!-- EVENTO PRINCIPALE -->
+<div class="upcoming-event">
 
-    <section class="events-content container">
+<div class="event-date-box">
+    <div>APR</div>
+    <div style="font-size:2rem;">21</div>
+    <div>2026</div>
+</div>
 
-        <h3
-            style="font-size: 1.2rem; color: var(--slate-grey); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; border-left: 4px solid var(--gold-accent); padding-left: 1rem;">
-            Prossimo Evento</h3>
+<div class="event-details">
 
-        <!-- UPCOMING EVENT -->
-        <article class="upcoming-event">
-            <div class="event-date-box">
-                <span class="month">Mag</span>
-                <span class="day">21</span>
-                <span class="year">2026</span>
-            </div>
-            <div class="event-details" style="position: relative;">
-                <span class="event-badge">Evento su Invito</span>
-                <h2 class="serif-heading">Presentazione Report "Cultura della Difesa"</h2>
-                <span class="event-location">Camera dei Deputati, Sala Refettorio, Palazzo San Macuto, Via del Seminario 76, Roma - Ore 16:30</span>
-                <p>In collaborazione con LUISS Press, DYNAMES presenta l'analisi annuale sulle dinamiche di deterrenza e
-                    resilienza sistemica nazionale. Interverranno esponenti delle Istituzioni e del comparto industriale
-                    Difesa e Sicurezza.<br><br>Evento su iniziativa del Vice Presidente della Camera Giorgio Mulè.</p>
-                <a href="mailto:redazione@dynames.it" class="btn">Richiedi Accredito</a>
-            
-                <img src="assets/camera%20dei%20deputati.jpg" alt="Locandina" style="position: absolute; bottom: 0; right: 0; width: 200px; opacity: 1; border-top-left-radius: 8px; box-shadow: -5px -5px 15px rgba(0,0,0,0.1); z-index: 10;">
-            </div>
-        </article>
+<div>
+<h2>Presentazione DYNAMES</h2>
+<p>📍 Camera dei Deputati, Sala Stampa, via della Missione 4, Roma – Ore 14:00</p>
 
-        <h3
-            style="font-size: 1.8rem; color: var(--night-blue); margin-bottom: 3rem; margin-top: 6rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem;">
-            Archivio Iniziative</h3>
+<p>
+La presentazione di DYNAMES segna l’avvio di un percorso strutturato dedicato all’analisi e alla comprensione delle dinamiche strategiche...
+</p>
 
-        <!-- PAST EVENTS GRID -->
-        <div class="past-events-grid">
-            <article class="past-event-card">
-                <div class="past-event-header">
-                    <h3 class="serif-heading">Leadership, Etica e Formazione</h3>
-                    <span class="past-event-date">Ottobre 2026</span>
-                </div>
-                <span
-                    style="display: block; font-size: 0.85rem; color: var(--slate-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Campus LUISS Viale Romania 32, Roma - Sala The Dome</span>
-                <p><strong>Relatori:</strong> Suor Anna Alfieri, Marica Scola, Stefano Corgnati, Gianluca Giansante, Fabrizio Lobasso, Giovanni Maria Iannucci (Generale Corpo d'Armata).</p>
-            </article>
+<a href="mailto:eventi@dynames.it">RICHIEDI ACCREDITO</a>
+</div>
 
-            <article class="past-event-card">
-                <div class="past-event-header">
-                    <h3 class="serif-heading">Cultura della Difesa: Comunicazione, Geopolitica, Formazione per l'Interesse Nazionale</h3>
-                    <span class="past-event-date">Marzo 2026</span>
-                </div>
-                <span
-                    style="display: block; font-size: 0.85rem; color: var(--slate-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Sala delle Colonne</span>
-                <p>Incontro di approfondimento sulle tematiche della difesa, della comunicazione strategica e della geopolitica per la tutela dell'interesse nazionale.</p>
-            </article>
+<div>
+<img src="assets/locandina-evento.jpg" class="event-poster-thumb open-lightbox" data-img="assets/locandina-evento.jpg">
+<div class="event-poster-caption">Clicca per ingrandire</div>
+</div>
 
-            <article class="past-event-card">
-                <div class="past-event-header">
-                    <h3 class="serif-heading">Seminario: Intelligence & Cognitive Warfare</h3>
-                    <span class="past-event-date">Gennaio 2026</span>
-                </div>
-                <span
-                    style="display: block; font-size: 0.85rem; color: var(--slate-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Centro
-                    Studi Geopolitica</span>
-                <p>Analisi delle metodologie di ingerenza esterna dirette ai processi cognitivi decisionali.
-                    Presentazione dello studio sui framework difensivi per le corporate nazionali.</p>
-            </article>
+</div>
+</div>
 
-            <article class="past-event-card">
-                <div class="past-event-header">
-                    <h3 class="serif-heading">Lancio della Piattaforma DYNAMES</h3>
-                    <span class="past-event-date">Dicembre 2025</span>
-                </div>
-                <span
-                    style="display: block; font-size: 0.85rem; color: var(--slate-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Milano</span>
-                <p>Presentazione ufficiale del progetto editoriale e della rivista quadrimestrale ad una selezione di
-                    stakeholder industriali e corpi intermedi.</p>
-            </article>
+<h2>Archivio Iniziative</h2>
 
-        </div>
+<!-- EVENTO 1 -->
+<div class="past-event-row">
 
-    </section>
+<div>
+<h3>Leadership, Etica e Formazione</h3>
+<p>5 marzo 2026, LUISS Roma</p>
 
-    <footer>
-        <div class="container">
-            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: 1px;">DYNAMES</h3>
-            <p>Iscrizione Registro degli Operatori di Comunicazione e Postali n° 44335 a favore di FONDAZIONE BOSCACCI
-                ETS</p>
-            <p style="margin-top: 1rem; color: var(--slate-grey);">&copy; 2026 DYNAMES. Tutti i diritti riservati.</p>
-        </div>
-    </footer>
+<p>Leadership, Etica e Formazione nasce dall’esigenza...</p>
+
+<p><strong>Partecipanti:</strong> Suor Anna Alfieri, ...</p>
+</div>
+
+<div>
+<img src="assets/evento-luiss.jpg" class="open-lightbox" data-img="assets/evento-luiss.jpg">
+<div class="event-poster-caption">Clicca per ingrandire</div>
+</div>
+
+</div>
+
+<!-- EVENTO 2 -->
+<div class="past-event-row">
+
+<div>
+<h3>[INSERIRE TITOLO]</h3>
+<p>18 settembre 2025, [LUOGO]</p>
+<p>[DESCRIZIONE]</p>
+<p><strong>Partecipanti:</strong> [...]</p>
+</div>
+
+<div>
+<img src="assets/placeholder-evento.jpg" class="open-lightbox" data-img="assets/placeholder-evento.jpg">
+<div class="event-poster-caption">Clicca per ingrandire</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+<span class="close" id="close">&times;</span>
+<img id="lightbox-img">
+</div>
+
+<script>
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+document.querySelectorAll(".open-lightbox").forEach(img => {
+    img.addEventListener("click", function(){
+        lightbox.classList.add("active");
+        lightboxImg.src = this.dataset.img;
+    });
+});
+
+document.getElementById("close").onclick = () => {
+    lightbox.classList.remove("active");
+};
+
+lightbox.onclick = (e)=>{
+    if(e.target===lightbox){
+        lightbox.classList.remove("active");
+    }
+};
+</script>
 
 </body>
-
 </html>
