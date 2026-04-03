@@ -255,7 +255,7 @@
         }
 
         .event-poster-wrapper {
-            flex: 0 0 220px;
+            flex: 0 0 260px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -287,10 +287,11 @@
             display: block;
             width: 100%;
             height: 320px;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center;
             border: 1px solid #e2e8f0;
             background: #f1f5f9;
+            border-radius: 6px;
         }
 
         .event-poster-caption {
@@ -425,7 +426,7 @@
         .past-event-image .event-poster-thumb {
             width: 100%;
             height: 260px;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center;
             border-radius: 6px;
             border: 1px solid #e2e8f0;
@@ -492,8 +493,7 @@
             }
 
             .event-poster-thumb {
-                height: auto;
-                max-height: 420px;
+                height: 320px;
                 object-fit: contain;
             }
 
@@ -508,8 +508,7 @@
             }
 
             .past-event-image .event-poster-thumb {
-                height: auto;
-                max-height: 320px;
+                height: 260px;
                 object-fit: contain;
             }
 
@@ -583,7 +582,7 @@
                     <h2 class="serif-heading">Presentazione DYNAMES</h2>
                     <span class="event-location">📍 Camera dei Deputati, Sala Stampa, via della Missione 4, Roma – Ore 14:00</span>
                     <p>La presentazione di DYNAMES segna l’avvio di un percorso strutturato dedicato all’analisi e alla comprensione delle dinamiche strategiche che attraversano i sistemi di difesa, sicurezza e governance. L’evento introduce la visione, gli obiettivi e il capitale umano che animano l’iniziativa, valorizzando un approccio multidisciplinare capace di integrare competenze istituzionali, accademiche e industriali. In questo contesto, DYNAMES si propone come piattaforma di riferimento per lo sviluppo di idee, il confronto strategico e la produzione di conoscenza a supporto dell’interesse nazionale.</p>
-                    <a href="mailto:eventi@dynames.it" class="btn">Richiedi Accredito</a>
+                    <a href="mailto:relazioni@dynames.it" class="btn">Richiedi Accredito</a>
                 </div>
 
                 <div class="event-poster-wrapper">
@@ -635,20 +634,20 @@
 
             <div class="past-event-row">
                 <div class="past-event-text">
-                    <h3 class="serif-heading">[INSERIRE TITOLO EVENTO 18 SETTEMBRE 2025]</h3>
-                    <span class="event-meta">18 settembre 2025, [INSERIRE LUOGO]</span>
-                    <p>[INSERIRE DESCRIZIONE EVENTO]</p>
-                    <p><strong>Partecipanti:</strong> [INSERIRE PARTECIPANTI]</p>
+                    <h3 class="serif-heading">Cultura della Difesa: Comunicazione, Geopolitica, Formazione per l’Interesse Nazionale</h3>
+                    <span class="event-meta">18 settembre 2025, Sala delle Colonne, Campus LUISS, Viale Pola 12, Roma</span>
+                    <p>Cultura della Difesa: Comunicazione, Geopolitica, Formazione per l’Interesse Nazionale nasce con l’obiettivo di promuovere una riflessione ampia e interdisciplinare sul ruolo della Difesa nella società contemporanea, mettendo in dialogo dimensione mediatica, visione geopolitica e percorsi educativi e formativi. Ospitato presso il Campus LUISS, l’evento ha riunito rappresentanti del mondo istituzionale, accademico, industriale, giornalistico e militare per approfondire il valore strategico della cultura della difesa come componente essenziale della consapevolezza nazionale. Attraverso tre panel dedicati alla comunicazione pubblica, all’interesse nazionale e alla formazione specialistica, l’iniziativa ha offerto un confronto qualificato sulle modalità con cui rafforzare il legame tra difesa, cittadinanza e sistema-Paese.</p>
+                    <p><strong>Partecipanti:</strong> Guido D’Ubaldo, Gianni Riotta, Maurizio Caprara, Claudia Trivilino, Anna Bisogno, Elias Zarina, Gen. C.A. Mauro D’Ubaldi, Alberto Flores D’Arcais, Luciano Bozzo, Stefano Pontecorvo, Marco Di Liddo, Amm. Giuseppe Cavo Dragone, Claudio Catalano, Valentina Panetta, On. Edmondo Cirielli, Antonio Natali, Daniela Bianchi, Stefano Toncich, Gen. C.A. Stefano Mannino, Gen. C.A. (ris.) Massimo Panizzi, Franco Massi</p>
                 </div>
                 <div class="past-event-image">
                     <div>
                         <button type="button"
                                 class="event-poster-trigger open-lightbox"
-                                data-img="assets/placeholder-evento.jpg"
-                                data-alt="Immagine segnaposto per l'evento del 18 settembre 2025"
-                                aria-label="Apri immagine evento del 18 settembre 2025">
-                            <img src="assets/placeholder-evento.jpg"
-                                 alt="Immagine segnaposto per l'evento del 18 settembre 2025"
+                                data-img="assets/Locandina_18settembre2025.jpg"
+                                data-alt="Locandina dell'evento Cultura della Difesa: Comunicazione, Geopolitica, Formazione per l’Interesse Nazionale"
+                                aria-label="Apri immagine evento Cultura della Difesa: Comunicazione, Geopolitica, Formazione per l’Interesse Nazionale">
+                            <img src="assets/Locandina_18settembre2025.jpg"
+                                 alt="Locandina dell'evento Cultura della Difesa: Comunicazione, Geopolitica, Formazione per l’Interesse Nazionale"
                                  class="event-poster-thumb">
                         </button>
                         <span class="event-poster-caption">Clicca per ingrandire</span>
@@ -673,8 +672,7 @@
     <footer>
         <div class="container">
             <h3 style="font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: 1px;">DYNAMES</h3>
-            <p>Iscrizione Registro degli Operatori di Comunicazione e Postali n° 44335 a favore di FONDAZIONE BOSCACCI
-                ETS</p>
+            <p>Iscrizione Registro degli Operatori di Comunicazione e Postali n° 44335 a favore di FONDAZIONE BOSCACCI ETS</p>
             <p style="margin-top: 1rem; color: var(--slate-grey);">&copy; 2026 DYNAMES. Tutti i diritti riservati.</p>
         </div>
     </footer>
