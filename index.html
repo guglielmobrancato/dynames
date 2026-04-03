@@ -308,6 +308,44 @@
             margin-bottom: 2rem;
         }
 
+        .roadmap-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .roadmap-text-panel {
+            min-width: 0;
+        }
+
+        .roadmap-scrollbox {
+            max-height: 640px;
+            overflow-y: auto;
+            padding-right: 1rem;
+            scrollbar-width: thin;
+            scroll-behavior: smooth;
+        }
+
+        .roadmap-image-panel {
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1 / 1;
+            min-height: 0;
+        }
+
+        .roadmap-poster {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            background: #e5e7eb;
+        }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -382,6 +420,22 @@
         }
 
         @media (max-width: 900px) {
+            .roadmap-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .roadmap-scrollbox {
+                max-height: none;
+                overflow: visible;
+                padding-right: 0;
+            }
+
+            .roadmap-image-panel {
+                aspect-ratio: 4 / 5;
+                min-height: 360px;
+            }
+
             body {
                 overflow-x: hidden;
             }
@@ -700,30 +754,60 @@
     </section>
 
     <section id="eventi" class="container" style="padding-top: 10rem; margin-bottom: 6rem;">
-        <h2 class="section-title">Eventi & Roadmap</h2>
-        <div class="grid-2">
-            <div>
+        <h2 class="section-title">Eventi &amp; Roadmap</h2>
+        <div class="roadmap-layout">
+            <div class="roadmap-text-panel">
                 <h3 style="font-size: 1.8rem; color: var(--night-blue); margin-bottom: 2rem;">Programmazione futura</h3>
-                <div class="timeline">
-    <div class="timeline-item">
-        <div class="timeline-date">21 aprile 2026, ore 14:00</div>
-        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Camera dei Deputati - Sala Stampa</h3>
-        <p>Presentazione DYNAMES</p>
-    </div>
-    <div class="timeline-item">
-        <div class="timeline-date">21 Maggio 2026, ore 16:30</div>
-        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Camera dei Deputati - Sala del Refettorio</h3>
-        <p>Presentazione Report "Cultura della Difesa" con LUISS - Scuola di Giornalismo e Form&ATP</p>
-    </div>
-    <div class="timeline-item">
-        <div class="timeline-date">Ottobre 2026</div>
-        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Senato della Repubblica</h3>
-        <p>Presentazione 1° numero quadrimestrale e Premio Cultura della Difesa con LUISS - Scuola di Giornalismo e Form&ATP</p>
-    </div>
-</div>
+                <div class="timeline roadmap-scrollbox">
+                    <div class="timeline-item">
+                        <div class="timeline-date">21 aprile 2026, ore 14:00</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Camera dei Deputati - Sala Stampa</h3>
+                        <p>Presentazione DYNAMES</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">21 Maggio 2026, ore 16:30</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Camera dei Deputati - Sala del Refettorio</h3>
+                        <p>Presentazione Report "Cultura della Difesa" con LUISS - Scuola di Giornalismo e Form&amp;ATP</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Giugno 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Napoli</h3>
+                        <p>Data e luogo da confermare</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Luglio 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Brussels</h3>
+                        <p>Data e luogo da confermare</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Settembre 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Bari</h3>
+                        <p>Data e luogo da confermare</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Settembre 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Sanremo</h3>
+                        <p>Data e luogo da confermare</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Ottobre 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Senato della Repubblica</h3>
+                        <p>Presentazione 1° numero quadrimestrale e Premio Cultura della Difesa con LUISS - Scuola di Giornalismo e Form&amp;ATP</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Novembre 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Milano</h3>
+                        <p>Data e luogo da confermare</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Dicembre 2026</div>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Torino</h3>
+                        <p>Data e luogo da confermare</p>
+                    </div>
+                </div>
             </div>
-            <div class="card" style="padding: 0; overflow: hidden; display: flex; height: 100%;">
-                <img src="assets/locandina-evento.jpg" alt="Locandina del prossimo evento" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+            <div class="roadmap-image-panel card">
+                <img src="assets/locandina-evento.jpg" alt="Locandina del prossimo evento" class="roadmap-poster">
             </div>
         </div>
 
@@ -943,10 +1027,27 @@
                 <h4
                     style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--optical-white); font-family: 'Montserrat';">
                     Contatti</h4>
-                <p><a href="mailto:redazione@dynames.it"
+                <p
+                    style="margin-bottom: 0.2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--slate-grey);">
+                    Attività editoriale</p>
+                <p style="margin-bottom: 1rem;"><a href="mailto:redazione@dynames.it"
                         style="color: var(--text-light); text-decoration: none; transition: color 0.3s;"
                         onmouseover="this.style.color='var(--optical-white)'"
                         onmouseout="this.style.color='var(--text-light)'">redazione@dynames.it</a></p>
+                <p
+                    style="margin-bottom: 0.2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--slate-grey);">
+                    Collaborazioni e varie</p>
+                <p style="margin-bottom: 1rem;"><a href="mailto:segreteria@dynames.it"
+                        style="color: var(--text-light); text-decoration: none; transition: color 0.3s;"
+                        onmouseover="this.style.color='var(--optical-white)'"
+                        onmouseout="this.style.color='var(--text-light)'">segreteria@dynames.it</a></p>
+                <p
+                    style="margin-bottom: 0.2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--slate-grey);">
+                    Eventi</p>
+                <p><a href="mailto:relazioni@dynames.it"
+                        style="color: var(--text-light); text-decoration: none; transition: color 0.3s;"
+                        onmouseover="this.style.color='var(--optical-white)'"
+                        onmouseout="this.style.color='var(--text-light)'">relazioni@dynames.it</a></p>
             </div>
 
             <!-- Colonna 3: Direzione -->
