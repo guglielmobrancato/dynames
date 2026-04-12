@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DFL8MJSKVJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-DFL8MJSKVJ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNAMES | Quando un post diventa geopolitica</title>
+    <meta name="description"
+        content="Un contributo di Laura Laportella su Trump, i social e la trasformazione performativa del linguaggio internazionale nell'età delle piattaforme.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --night-blue: #0b1120;
+            --slate-grey: #334155;
+            --light-grey: #f8fafc;
+            --optical-white: #ffffff;
+            --accent: #1e3a8a;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #cbd5e1;
+            --paper-bg: #fdfbf7;
+            --gold-accent: #b8935a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--paper-bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 1.15rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .brand {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .serif-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            background-color: var(--optical-white);
+            border-bottom: 2px solid var(--night-blue);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand h1 {
+            font-size: 1.8rem;
+            color: var(--night-blue);
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .brand p {
+            font-size: 0.65rem;
+            color: var(--slate-grey);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .desktop-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            color: var(--night-blue);
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: var(--gold-accent);
+        }
+
+        .back-nav {
+            padding: 2rem 0;
+        }
+
+        .back-nav a {
+            text-decoration: none;
+            color: var(--slate-grey);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .back-nav a:hover {
+            color: var(--gold-accent);
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .article-category {
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .article-title {
+            font-size: 3.5rem;
+            color: var(--night-blue);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .article-abstract {
+            font-size: 1.5rem;
+            color: var(--slate-grey);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            max-width: 90%;
+            margin: 0 auto 3rem auto;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--slate-grey);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+
+        .meta-author {
+            font-weight: 700;
+            color: var(--night-blue);
+        }
+
+        .article-hero {
+            width: 100%;
+            height: 60vh;
+            min-height: 400px;
+            object-fit: cover;
+            object-position: center;
+            margin-bottom: 4rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #dbe4ef, #8ca0bb);
+        }
+
+        .article-body {
+            color: var(--text-primary);
+        }
+
+        .article-body p {
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            font-size: 2rem;
+            color: var(--night-blue);
+            margin: 3.5rem 0 1.5rem 0;
+            font-family: 'Playfair Display', serif;
+            line-height: 1.2;
+        }
+
+        .article-body h3 {
+            font-size: 1.5rem;
+            color: var(--night-blue);
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .article-body ul {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.8rem;
+        }
+
+        .pull-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--gold-accent);
+            font-style: italic;
+            text-align: center;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            line-height: 1.3;
+            max-width: 90%;
+            position: relative;
+        }
+
+        .pull-quote::before {
+            content: "«";
+            font-size: 4rem;
+            color: rgba(184, 147, 90, 0.2);
+            position: absolute;
+            top: -2rem;
+            left: 0;
+            font-style: normal;
+        }
+
+        .author-box {
+            margin-top: 6rem;
+            padding: 3rem;
+            background: var(--optical-white);
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--gold-accent);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .author-box img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+
+        .author-info h4 {
+            font-size: 1.2rem;
+            color: var(--night-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .author-info p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        footer {
+            background: var(--night-blue);
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 0.9rem;
+            margin-top: 6rem;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .container,
+            section {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+                box-sizing: border-box;
+            }
+
+            p,
+            ul,
+            ol {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                word-wrap: break-word;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .article-title {
+                font-size: 2.5rem;
+            }
+
+            .article-abstract {
+                font-size: 1.2rem;
+            }
+
+            .article-hero {
+                height: 40vh;
+                min-height: 280px;
+            }
+
+            .article-container {
+                padding: 0 1.5rem;
+            }
+
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .author-info p {
+                text-align: center;
+            }
+
+            .pull-quote {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="brand">
+                <a href="../index.html" style="text-decoration: none;">
+                    <h1>
+                        <img src="../assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" alt="DYNAMES Logo"
+                            class="brand-logo" onerror="this.style.display='none'">
+                        DYNAMES
+                    </h1>
+                    <p>Governance di Forze e Sistemi</p>
+                </a>
+            </div>
+            <nav class="desktop-nav">
+                <a href="../hub.html" class="active">Analisi &amp; Articoli</a>
+                <a href="../eventi.html">Eventi</a>
+                <a href="../chi-siamo.html">Chi Siamo</a>
+                <a href="../Temi e Collaborazioni.html">Temi e Collaborazioni</a>
+                <a href="../osint-tools.html">OSINT Hub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container back-nav">
+        <a href="../hub.html">&larr; Torna all'Hub</a>
+    </div>
+
+    <article>
+        <div class="article-container article-header">
+            <span class="article-category">Geopolitica digitale</span>
+            <h1 class="serif-heading article-title">Quando un post diventa geopolitica</h1>
+            <p class="article-abstract">Trump, i social e la trasformazione performativa del linguaggio internazionale.</p>
+
+            <div class="article-meta">
+                <span class="meta-author">Laura Laportella</span>
+                <span>13 Aprile 2026</span>
+                <span>Tempo di lettura: 9 min</span>
+            </div>
+        </div>
+
+        <img src="Immagini/2026.04.13-quando-un-post-diventa-geopolitica.png"
+            alt="Illustrazione editoriale dedicata al rapporto tra social media, leadership politica e linguaggio geopolitico"
+            class="article-hero" onerror="this.style.display='none'">
+
+        <div class="article-container article-body">
+
+            <div class="pull-quote" style="margin-top: 2rem;">
+                “La parola smette di accompagnare la trattativa e diventa parte integrante della trattativa stessa.”
+            </div>
+
+            <p><span
+                    style="font-size: 3rem; float: left; line-height: 1; padding-right: 0.8rem; font-family: 'Playfair Display', serif; color: var(--night-blue);">P</span>er capire che cosa sia diventata la geopolitica nell’età delle piattaforme, Donald Trump resta un osservatorio privilegiato. Conta poco stabilire se sia un’eccezione o il sintomo più vistoso di un cambiamento più ampio. Il suo caso aiuta soprattutto a mettere a fuoco una trasformazione ormai strutturale: la politica internazionale passa sempre più spesso attraverso atti di linguaggio capaci di produrre effetti immediati. Le parole non seguono più gli eventi come semplice commento o giustificazione. Li preparano, li orientano, li intensificano, a volte li trasformano direttamente in spettacolo. I social hanno inciso proprio su questo piano, alterando la grammatica del potere e comprimendo la distanza tra enunciazione e conseguenza. Anche gli studi più recenti sulla securitizzazione online mostrano come la costruzione pubblica di minacce ed emergenze si sviluppi dentro ecosistemi comunicativi segnati da velocità, amplificazione e conflitto permanente.</p>
+
+            <h2>Il post come atto geopolitico</h2>
+
+            <p>Trump ha reso questa dinamica visibile in forma quasi didattica. I suoi post, i suoi annunci improvvisi, le sue formule ridotte a slogan mostrano con chiarezza che il linguaggio contemporaneo non serve soltanto a comunicare una decisione. Serve a metterla in scena, a creare un clima, a imporre una lettura del mondo prima ancora che il dibattito sul merito possa davvero cominciare. Quando un leader lancia sui social una minaccia commerciale, un ultimatum diplomatico o un giudizio sprezzante su un alleato, compie un gesto che va oltre la dichiarazione. Occupa il campo simbolico, costringe gli altri a reagire dentro una cornice già predisposta, sposta il baricentro della discussione.</p>
+
+            <p>La parola giusta, in questo caso, è performatività. In termini semplici, alcune espressioni non si limitano a descrivere ciò che accade: producono effetti, modificano comportamenti, alterano priorità, cambiano il modo in cui una crisi viene percepita e gestita. In geopolitica la scelta del lessico ha sempre contato, ma l’ambiente delle piattaforme ha esasperato questa caratteristica. Ogni enunciato entra in un ecosistema che premia sintesi aggressiva, visibilità permanente, conflitto e rapidità. Una frase può colpire i mercati, un’etichetta può spostare il significato politico di una misura, un post può trasformarsi in strumento di pressione diplomatica.</p>
+
+            <h2>Il frame come arma</h2>
+
+            <p>Basta osservare una formula come “Liberation Day”, usata da Trump per accompagnare il lancio della nuova stagione di dazi nell’aprile 2025. Reuters ha raccontato che quell’annuncio prevedeva una tariffa base del 10% sulle importazioni, con aliquote più alte per diversi partner commerciali, e che i mercati globali reagirono immediatamente con forte volatilità. La formula conta perché sottrae la misura al terreno tecnico e la ricolloca dentro una trama morale molto più semplice: liberazione, riscatto, recupero di sovranità. La decisione economica viene così presentata come gesto simbolico di emancipazione nazionale. Il pubblico viene chiamato a riconoscersi in una scena di liberazione più che a interrogarsi, almeno in prima battuta, su filiere, costi e impatti sistemici.</p>
+
+            <p>Qui si vede uno dei tratti più importanti del linguaggio geopolitico contemporaneo: la sua capacità di comprimere visioni del mondo dentro espressioni brevi, memorabili, facili da rilanciare. La semplificazione, in questo quadro, diventa una risorsa strategica. Chi riesce a imporre il frame prima degli altri parte in vantaggio. Prima si decide come una questione dovrà essere percepita; poi, eventualmente, si entra nei dettagli. Il lessico diventa una forma di pre-governo del reale. Le parole aprono il perimetro entro cui gli altri saranno costretti a discutere.</p>
+
+            <h2>Quando la diplomazia diventa spettacolo</h2>
+
+            <p>La stessa logica emerge con forza quando il linguaggio invade il territorio della diplomazia e ne cambia i codici. Un caso molto istruttivo è la pubblicazione di messaggi privati di Emmanuel Macron da parte di Trump, raccontata dal Guardian come un gesto pensato per ferire, intimidire e ridefinire pubblicamente i rapporti di forza. L’elemento più interessante dell’episodio non risiede soltanto nel contenuto del messaggio. Pesa il gesto di trascinare un testo nato per la riservatezza diplomatica sul palcoscenico della piattaforma. In quel passaggio la comunicazione privata cambia statuto: da scambio confidenziale diventa prova di forza, da materiale negoziale diventa strumento di esposizione, da messaggio a due si trasforma in evento per un pubblico di massa. Il valore politico dell’atto nasce proprio da questa trasfigurazione. Rendere pubblico un contenuto significa ridefinire gerarchie, imporre una scena di umiliazione, segnalare a tutti chi controlla il ritmo e il tono del rapporto.</p>
+
+            <p>L’episodio aiuta a capire quanto si sia eroso il vecchio codice diplomatico. Per decenni la politica estera occidentale ha vissuto di formule prudenti, ambiguità controllate, tempi lunghi, comunicati limati fino all’ossessione. L’ambiente delle piattaforme ha intaccato quella grammatica e ha premiato un altro registro: pressione pubblica, esposizione, provocazione, messaggio lanciato senza filtri. In questa nuova ecologia mediale il leader ottiene vantaggio anche producendo disorientamento, imponendo tempi, spingendo l’interlocutore sulla difensiva. La parola smette di accompagnare la trattativa e diventa parte integrante della trattativa stessa.</p>
+
+            <h2>NATO, pressione pubblica e incertezza strategica</h2>
+
+            <p>Anche la vicenda recente della NATO offre un esempio utile. Reuters ha riferito che, dopo il confronto con Mark Rutte nell’aprile 2026, Trump ha chiesto agli alleati europei impegni rapidi e concreti sulla sicurezza dello Stretto di Hormuz, continuando nello stesso tempo ad alzare la pressione pubblica sull’Alleanza. Il Guardian ha descritto un Trump “clearly disappointed” dal rifiuto di molti partner di seguirlo nella guerra contro l’Iran. Letta di sfuggita, una frase contro la NATO può sembrare il riflesso di un leader impulsivo. Letta con maggiore attenzione, produce molto di più: incrina simbolicamente l’idea di affidabilità dell’alleanza, alimenta il dubbio sulla tenuta degli impegni multilaterali, costringe gli europei a reagire pubblicamente, introduce incertezza come leva di negoziazione. La parola agisce perché modifica il terreno sul quale gli altri attori devono muoversi.</p>
+
+            <p>Trump interessa dunque soprattutto come sintomo di una mutazione più ampia. Il suo stile esasperato rende leggibile una tendenza che va ben oltre la sua figura. La geopolitica contemporanea si svolge in uno spazio nel quale dichiarazione, minaccia, slogan, battuta, indiscrezione, fuga di notizie e annuncio operativo convivono nello stesso flusso. La piattaforma livella i registri, riduce la distanza fra politica estera e comunicazione di massa, rende ogni enunciato potenzialmente virale e dunque potenzialmente operativo. Una frase può testare una linea negoziale in tempo reale. Un’etichetta può fissare il senso comune attorno a una crisi. Un post può diventare il primo atto di una decisione che verrà formalizzata soltanto in seguito.</p>
+
+            <h2>Le parole come dispositivo di potere</h2>
+
+            <p>Molti dei casi che hanno attraversato il dibattito geopolitico degli ultimi anni confermano questa tendenza. La guerra raccontata come “operazione speciale”, la pubblicazione di messaggi privati come strumento di intimidazione, la teatralizzazione continua della leadership americana, la trasformazione della diplomazia in contenuto da piattaforma: tutto rimanda alla stessa dinamica. Chiamare qualcosa “guerra commerciale”, “liberazione”, “sicurezza”, “cambio di regime” o “minaccia esistenziale” significa già orientare il campo delle risposte possibili. Ogni etichetta seleziona una gerarchia di emozioni, stabilisce quale cornice appaia legittima, suggerisce quale reazione sembri ragionevole e quale invece eccessiva o fuori luogo. Il conflitto, prima di dispiegarsi del tutto, viene spesso già organizzato dal vocabolario che lo rende leggibile.</p>
+
+            <p>Una lente semiotica consente di mettere meglio a fuoco il fenomeno. Ogni formula geopolitica contiene almeno tre livelli. Il primo riguarda il contenuto esplicito. Il secondo attiva immagini, memorie, associazioni culturali, tutto ciò che una parola porta con sé senza dichiararlo apertamente. Il terzo riguarda l’effetto pragmatico: chi deve reagire, in quale tempo, con quale postura pubblica, sotto quale pressione. Le formule che prosperano sulle piattaforme funzionano proprio per questa densità. Sono brevi, cariche, facili da rilanciare, difficili da neutralizzare. Hanno la rapidità dello slogan e la forza dell’ultimatum. Si fissano perché chiedono una presa di posizione immediata.</p>
+
+            <h2>Oltre Trump</h2>
+
+            <p>Il punto, allora, non consiste nel sostenere che la geopolitica sia diventata soltanto narrazione. Sarebbe una scorciatoia seducente, però povera. Le guerre restano guerre, i dazi restano dazi, gli equilibri di forza mantengono una materialità durissima. Quello che è cambiato riguarda la loro messa in forma pubblica. La loro intelligibilità, la loro legittimazione, la loro capacità di produrre consenso, paura o adesione passano sempre più dal linguaggio che li nomina e dalle piattaforme che lo amplificano. La competizione internazionale si gioca anche su questo terreno: nella capacità di imporre il nome più efficace a una crisi, la metafora dominante a un conflitto, il frame più stabile a una decisione.</p>
+
+            <p>Trump ha reso tutto questo più visibile perché ne ha estremizzato i codici. Ha usato il social come arena di pressione geopolitica continua. Ha trasformato il post in strumento di governo, l’etichetta in dispositivo di mobilitazione, l’esposizione pubblica in arma di disciplina. Fermarsi all’idea dell’eccesso personale vorrebbe dire perdere la questione più interessante. Il suo stile ha funzionato come un laboratorio. Ha mostrato in forma concentrata una verità più ampia: nella geopolitica contemporanea le parole partecipano alla produzione del potere. Dicono al mondo come deve apparire, entro quale racconto dovrà essere letto, sotto quale nome verrà combattuto.</p>
+
+            <div class="author-box">
+                <img src="../assets/Laura-Laportella.jpg" alt="Laura Laportella"
+                    onerror="this.style.display='none';">
+                <div class="author-info">
+                    <h4>Laura Laportella</h4>
+                    <p>Digital strategist e analista della comunicazione digitale. Nel suo lavoro collabora con istituzioni, università, enti non profit e realtà della comunicazione politica e pubblica. A livello di ricerca si occupa di come media, piattaforme e narrazioni contribuiscano a plasmare il modo in cui interpretiamo l’attualità e gli equilibri geopolitici.</p>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <footer>
+        <div class="container">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: 1px;">DYNAMES</h3>
+            <p>Iscrizione Registro degli Operatori di Comunicazione e Postali n° 44335 a favore di FONDAZIONE BOSCACCI ETS</p>
+            <p style="margin-top: 1rem; color: var(--slate-grey);">&copy; 2026 DYNAMES. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
