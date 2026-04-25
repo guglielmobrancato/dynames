@@ -152,11 +152,8 @@
         }
 
         .hero {
-            position: relative;
-            overflow: hidden;
-            isolation: isolate;
             background-color: var(--night-blue);
-            background-image: url('assets/chess.png');
+            background-image: linear-gradient(rgba(11, 17, 32, 0.85), rgba(11, 17, 32, 0.85)), url('assets/chess.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -165,29 +162,11 @@
             padding: 8rem 2rem;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(11, 17, 32, 0.88), rgba(11, 17, 32, 0.84));
-            opacity: 0;
-            z-index: 0;
-            animation: heroOverlayReveal 1.4s ease-out forwards;
-        }
-
-        .hero .container {
-            position: relative;
-            z-index: 1;
-        }
-
         .hero h2 {
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-            opacity: 0;
-            transform: translateY(24px);
-            animation: heroTextReveal 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
         }
 
         .hero p {
@@ -195,9 +174,6 @@
             color: var(--text-light);
             max-width: 800px;
             margin: 0 auto 2.5rem;
-            opacity: 0;
-            transform: translateY(24px);
-            animation: heroTextReveal 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
         }
 
         .btn {
@@ -718,38 +694,6 @@
             animation: loaderFade 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        @keyframes heroOverlayReveal {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes heroTextReveal {
-            from {
-                opacity: 0;
-                transform: translateY(24px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .hero::before,
-            .hero h2,
-            .hero p {
-                animation: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-        }
-
 
         .footer-brochure-link,
         .footer-social-link {
@@ -1043,7 +987,7 @@
                     <div class="timeline-item" style="background: rgba(30,58,138,0.04); padding: 1rem 1.5rem; border-radius: 6px; border-left: 4px solid #1e3a8a;">
                         <div class="timeline-date">21 Maggio 2026 · ore 16:30</div>
                         <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #1e3a8a; letter-spacing: 1px;">Evento principale</span>
-                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Camera dei Deputati - Sala del Refettorio</h3>
+                        <h3 style="margin: 0.5rem 0; color: var(--night-blue);">Biblioteca della Camera dei deputati "Nilde Iotti"</h3>
                         <p style="margin-bottom: 0.5rem;">Presentazione Report <strong>"Cultura della Difesa"</strong></p>
                         <p style="font-size: 0.9rem; color: var(--text-secondary);">In collaborazione con LUISS - Scuola di Giornalismo e Form&amp;ATP</p>
                     </div>
