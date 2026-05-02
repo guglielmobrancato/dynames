@@ -1385,6 +1385,44 @@
             });
         });
 
+
+        // Lightbox locandina evento
+        document.querySelectorAll('.open-lightbox').forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = document.getElementById('posterModal');
+                const image = document.getElementById('lightboxImage');
+                if (!modal || !image) return;
+                image.src = button.getAttribute('data-img') || image.src;
+                image.alt = button.getAttribute('data-alt') || image.alt;
+                modal.classList.add('open');
+                modal.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        const closePosterModal = document.getElementById('closePosterModal');
+        const posterModal = document.getElementById('posterModal');
+
+        if (closePosterModal && posterModal) {
+            closePosterModal.addEventListener('click', () => {
+                posterModal.classList.remove('open');
+                posterModal.setAttribute('aria-hidden', 'true');
+            });
+
+            posterModal.addEventListener('click', event => {
+                if (event.target === posterModal) {
+                    posterModal.classList.remove('open');
+                    posterModal.setAttribute('aria-hidden', 'true');
+                }
+            });
+
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape' && posterModal.classList.contains('open')) {
+                    posterModal.classList.remove('open');
+                    posterModal.setAttribute('aria-hidden', 'true');
+                }
+            });
+        }
+
         // Hide loader after animation
         window.addEventListener('load', () => {
             const loader = document.getElementById('initial-loader');
