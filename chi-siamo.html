@@ -1094,6 +1094,96 @@
                 height: 1.8rem;
             }
         }
+
+        /* DYNAMES mobile overflow hotfix 2026-09-07 */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .container,
+        .team-grid,
+        .author-box,
+        .author-info,
+        .bio-static,
+        .bio-summary-copy,
+        .bio-content {
+            min-width: 0;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .page-header {
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            .team-jump-nav {
+                width: 100%;
+                max-width: 100%;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .page-content.container {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .page-content > .team-section {
+                width: 100%;
+                max-width: 100%;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            .team-grid {
+                width: 100%;
+                max-width: 100%;
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .author-box,
+            .author-info,
+            .bio-static,
+            .bio-summary-copy,
+            .bio-content {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+
+            .author-box {
+                overflow: hidden;
+            }
+
+            .profile-name,
+            .profile-role,
+            .strategic-theme,
+            .strategic-theme strong,
+            .author-info .bio-content p {
+                max-width: 100%;
+                overflow-wrap: anywhere;
+            }
+
+            .strategic-theme {
+                white-space: normal;
+            }
+
+            .js .bio-static:not(.is-expanded) .bio-content p {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+        }
 </style>
 <!-- Favicon and SEO -->
 <link href="assets/logo%20DYNAMES%20positivo%20-%20quadrato.png" rel="icon" type="image/png"/>
