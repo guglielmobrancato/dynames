@@ -1,0 +1,43 @@
+name: DYNAMES Publish Payload
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/dynames-publish.yml'
+      - '.dynames-publish/**'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rebuild payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .dynames-publish/chunk-*.b64 > /tmp/dynames_payload.b64
+          base64 -d /tmp/dynames_payload.b64 > /tmp/dynames_payload.tar.gz
+          tar -tzf /tmp/dynames_payload.tar.gz
+          tar -xzf /tmp/dynames_payload.tar.gz -C .
+          rm -rf .dynames-publish
+          rm -f articles/Immagini/2026.09.08-guerra-droni-era-jet.webp.b64
+          rm -f .github/workflows/dynames-publish.yml
+      - name: Commit published files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'DynamesIT'
+          git config user.email 'redazione@dynames.it'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'Publish Guerra droni era jet article and assets'
+            git push origin main
+          fi
