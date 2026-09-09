@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<!-- DYNAMES: Google Analytics 4 con consenso preventivo -->
+<script>
+    (function () {
+        'use strict';
+
+        const GA_MEASUREMENT_ID = 'G-CRR71TH6YJ';
+        const CONSENT_KEY = 'dynames_cookie_consent_v1';
+        const CONSENT_DURATION_DAYS = 180;
+        let analyticsLoaded = false;
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+        // Consent Mode: valori negati per impostazione predefinita.
+        // Il file esterno di Google Analytics non viene caricato prima dell'accettazione.
+        window.gtag('consent', 'default', {
+            analytics_storage: 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            functionality_storage: 'granted',
+            security_storage: 'granted',
+            wait_for_update: 500
+        });
+
+        function readConsent() {
+            try {
+                const raw = localStorage.getItem(CONSENT_KEY);
+                if (!raw) return null;
+                const saved = JSON.parse(raw);
+                if (!saved || !['accepted', 'rejected'].includes(saved.value) || !saved.timestamp) return null;
+                const age = Date.now() - Number(saved.timestamp);
+                const maxAge = CONSENT_DURATION_DAYS * 24 * 60 * 60 * 1000;
+                if (age > maxAge) {
+                    localStorage.removeItem(CONSENT_KEY);
+                    return null;
+                }
+                return saved.value;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function saveConsent(value) {
+            try {
+                localStorage.setItem(CONSENT_KEY, JSON.stringify({
+                    value: value,
+                    timestamp: Date.now()
+                }));
+            } catch (error) {
+                // La scelta resta valida per la sessione anche se localStorage non è disponibile.
+            }
+        }
+
+        function deleteAnalyticsCookies() {
+            const cookieNames = document.cookie
+                .split(';')
+                .map(function (cookie) { return cookie.split('=')[0].trim(); })
+                .filter(function (name) {
+                    return name === '_ga' || name === '_gid' || name === '_gat' || name.indexOf('_ga_') === 0;
+                });
+
+            const host = window.location.hostname;
+            const domains = ['', host, '.' + host];
+
+            cookieNames.forEach(function (name) {
+                domains.forEach(function (domain) {
+                    const domainPart = domain ? '; domain=' + domain : '';
+                    document.cookie = name + '=; Max-Age=0; path=/' + domainPart + '; SameSite=Lax';
+                });
+            });
+        }
+
+        function loadAnalytics() {
+            if (analyticsLoaded || document.querySelector('script[data-dynames-ga="true"]')) return;
+            analyticsLoaded = true;
+
+            window.gtag('consent', 'update', {
+                analytics_storage: 'granted',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied'
+            });
+
+            window.gtag('js', new Date());
+            window.gtag('config', GA_MEASUREMENT_ID, {
+                allow_google_signals: false,
+                allow_ad_personalization_signals: false
+            });
+
+            const script = document.createElement('script');
+            script.async = true;
+            script.src='https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_MEASUREMENT_ID);
+            script.dataset.dynamesGa = 'true';
+            document.head.appendChild(script);
+        }
+
+        function setConsent(value, reloadAfterRejection) {
+            saveConsent(value);
+
+            if (value === 'accepted') {
+                loadAnalytics();
+            } else {
+                window.gtag('consent', 'update', {
+                    analytics_storage: 'denied',
+                    ad_storage: 'denied',
+                    ad_user_data: 'denied',
+                    ad_personalization: 'denied'
+                });
+
+                deleteAnalyticsCookies();
+
+                if (reloadAfterRejection && analyticsLoaded) {
+                    window.location.reload();
+                    return;
+                }
+            }
+
+            updateConsentInterface(value);
+        }
+
+        function injectConsentStyles() {
+            if (document.getElementById('dynames-consent-styles')) return;
+
+            const style = document.createElement('style');
+            style.id = 'dynames-consent-styles';
+            style.textContent = `
+                #dynames-consent-banner,
+                #dynames-cookie-settings {
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                #dynames-consent-banner {
+                    position: fixed;
+                    left: 1rem;
+                    right: 1rem;
+                    bottom: 1rem;
+                    z-index: 2147483646;
+                    max-width: 760px;
+                    margin: 0 auto;
+                    padding: 1.15rem 1.25rem;
+                    color: #f8fafc;
+                    background: rgba(11, 17, 32, 0.98);
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                    border-top: 4px solid #b8935a;
+                    border-radius: 8px;
+                    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.34);
+                }
+
+                #dynames-consent-banner[hidden],
+                #dynames-cookie-settings[hidden] {
+                    display: none !important;
+                }
+
+                .dynames-consent-title {
+                    margin: 0 0 0.45rem;
+                    color: #ffffff;
+                    font-size: 1.05rem;
+                    font-weight: 700;
+                    line-height: 1.3;
+                }
+
+                .dynames-consent-text {
+                    margin: 0;
+                    color: #dbe4ef;
+                    font-size: 0.92rem;
+                    line-height: 1.55;
+                }
+
+                .dynames-consent-text a {
+                    color: #f0d6ad;
+                    text-decoration: underline;
+                    text-underline-offset: 2px;
+                }
+
+                .dynames-consent-actions {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: flex-end;
+                    gap: 0.7rem;
+                    margin-top: 1rem;
+                }
+
+                .dynames-consent-btn {
+                    min-width: 118px;
+                    padding: 0.72rem 1rem;
+                    border: 1px solid #ffffff;
+                    border-radius: 5px;
+                    font: inherit;
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                    cursor: pointer;
+                }
+
+                .dynames-consent-btn:focus-visible,
+                #dynames-cookie-settings:focus-visible {
+                    outline: 3px solid #f0d6ad;
+                    outline-offset: 3px;
+                }
+
+                .dynames-consent-reject {
+                    color: #ffffff;
+                    background: transparent;
+                }
+
+                .dynames-consent-accept {
+                    color: #0b1120;
+                    background: #ffffff;
+                }
+
+                #dynames-cookie-settings {
+                    position: fixed;
+                    left: 0.75rem;
+                    bottom: 0.75rem;
+                    z-index: 2147483645;
+                    padding: 0.55rem 0.75rem;
+                    color: #ffffff;
+                    background: #0b1120;
+                    border: 1px solid rgba(255, 255, 255, 0.35);
+                    border-radius: 999px;
+                    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+                    font-size: 0.76rem;
+                    font-weight: 700;
+                    cursor: pointer;
+                }
+
+                @media (max-width: 600px) {
+                    #dynames-consent-banner {
+                        left: 0.6rem;
+                        right: 0.6rem;
+                        bottom: 0.6rem;
+                        padding: 1rem;
+                    }
+
+                    .dynames-consent-actions {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                    }
+
+                    .dynames-consent-btn {
+                        width: 100%;
+                        min-width: 0;
+                    }
+                }
+            `;
+
+            document.head.appendChild(style);
+        }
+
+        function buildConsentInterface() {
+            if (document.getElementById('dynames-consent-banner')) return;
+
+            injectConsentStyles();
+
+            const banner = document.createElement('section');
+            banner.id = 'dynames-consent-banner';
+            banner.setAttribute('role', 'dialog');
+            banner.setAttribute('aria-labelledby', 'dynames-consent-title');
+            banner.setAttribute('aria-describedby', 'dynames-consent-description');
+
+            banner.innerHTML = `
+                <h2 class="dynames-consent-title" id="dynames-consent-title">Preferenze per i dati statistici</h2>
+                <p class="dynames-consent-text" id="dynames-consent-description">
+                    Utilizziamo Google Analytics 4 solo con il tuo consenso, per conoscere in forma aggregata le pagine visitate e migliorare DYNAMES. Se rifiuti, il tag Analytics non viene caricato. Puoi cambiare scelta in qualsiasi momento. <a href="/Privacy-Policy.html#cookie-analytics">Informativa privacy e cookie</a>.
+                </p>
+                <div class="dynames-consent-actions">
+                    <button type="button" class="dynames-consent-btn dynames-consent-reject" id="dynames-consent-reject">Rifiuta</button>
+                    <button type="button" class="dynames-consent-btn dynames-consent-accept" id="dynames-consent-accept">Accetta</button>
+                </div>
+            `;
+
+            const settings = document.createElement('button');
+            settings.id = 'dynames-cookie-settings';
+            settings.type = 'button';
+            settings.textContent = 'Preferenze cookie';
+            settings.setAttribute('aria-label', 'Modifica le preferenze relative ai cookie e ai dati statistici');
+            settings.hidden = true;
+
+            document.body.appendChild(banner);
+            document.body.appendChild(settings);
+
+            document.getElementById('dynames-consent-accept').addEventListener('click', function () {
+                setConsent('accepted', false);
+            });
+
+            document.getElementById('dynames-consent-reject').addEventListener('click', function () {
+                setConsent('rejected', true);
+            });
+
+            settings.addEventListener('click', function () {
+                banner.hidden = false;
+                settings.hidden = true;
+
+                const rejectButton = document.getElementById('dynames-consent-reject');
+                if (rejectButton) rejectButton.focus();
+            });
+        }
+
+        function updateConsentInterface(value) {
+            const banner = document.getElementById('dynames-consent-banner');
+            const settings = document.getElementById('dynames-cookie-settings');
+
+            if (!banner || !settings) return;
+
+            if (value === 'accepted' || value === 'rejected') {
+                banner.hidden = true;
+                settings.hidden = false;
+            } else {
+                banner.hidden = false;
+                settings.hidden = true;
+            }
+        }
+
+        const savedConsent = readConsent();
+
+        if (savedConsent === 'accepted') {
+            loadAnalytics();
+        }
+
+        function initialiseConsentInterface() {
+            buildConsentInterface();
+            updateConsentInterface(savedConsent);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialiseConsentInterface, { once: true });
+        } else {
+            initialiseConsentInterface();
+        }
+
+        window.DynamesConsent = {
+            accept: function () { setConsent('accepted', false); },
+            reject: function () { setConsent('rejected', true); },
+            open: function () {
+                buildConsentInterface();
+                updateConsentInterface(null);
+            },
+            current: readConsent
+        };
+    }());
+    </script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DYNAMES | Scorte, non solo fabbriche: il riarmo sanitario invisibile dell’Europa</title>
+<meta content="L’autonomia farmaceutica europea passa anche da scorte strategiche, capacità produttiva riservata, logistica di crisi e rapidità di deployment." name="description"/>
+<meta content="Francesco Bianchi" name="author"/>
+<link href="https://www.dynames.it/articles/2026.09.10-riarmo-sanitario.html" rel="canonical"/>
+<meta content="it_IT" property="og:locale"/>
+<meta content="article" property="og:type"/>
+<meta content="DYNAMES" property="og:site_name"/>
+<meta content="Scorte, non solo fabbriche: il riarmo sanitario invisibile dell’Europa" property="og:title"/>
+<meta content="Dalla produzione al last mile: perché l’autonomia farmaceutica europea passa sempre più anche da scorte strategiche, capacità produttiva riservata e logistica di crisi." property="og:description"/>
+<meta content="https://www.dynames.it/articles/2026.09.10-riarmo-sanitario.html" property="og:url"/>
+<meta content="https://www.dynames.it/articles/Immagini/2026.09.10-riarmo-sanitario-light.jpg?v=1" property="og:image"/>
+<meta content="https://www.dynames.it/articles/Immagini/2026.09.10-riarmo-sanitario-light.jpg?v=1" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="675" property="og:image:height"/>
+<meta content="Scorte farmaceutiche strategiche europee, capacità produttiva riservata e logistica di crisi" property="og:image:alt"/>
+<meta content="Francesco Bianchi" property="article:author"/>
+<meta content="2026-09-10T09:00:00+02:00" property="article:published_time"/>
+<meta content="Salute e Welfare" property="article:section"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Scorte, non solo fabbriche: il riarmo sanitario invisibile dell’Europa" name="twitter:title"/>
+<meta content="Dalla produzione al last mile: perché l’autonomia farmaceutica europea passa sempre più anche da scorte strategiche, capacità produttiva riservata e logistica di crisi." name="twitter:description"/>
+<meta content="https://www.dynames.it/articles/Immagini/2026.09.10-riarmo-sanitario-light.jpg?v=1" name="twitter:image"/>
+<meta content="Hub logistico europeo con scorte mediche strategiche pronte alla distribuzione in emergenza" name="twitter:image:alt"/>
+<meta content="https://www.dynames.it/articles/Immagini/2026.09.10-riarmo-sanitario-light.jpg?v=1" name="twitter:image:src"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "Scorte, non solo fabbriche: il riarmo sanitario invisibile dell’Europa",
+  "alternativeHeadline": "Dalla produzione al last mile: perché l’autonomia farmaceutica europea passa sempre più anche da scorte strategiche, capacità produttiva riservata e logistica di crisi.",
+  "description": "L’autonomia farmaceutica europea passa anche da scorte strategiche, capacità produttiva riservata, logistica di crisi e rapidità di deployment.",
+  "datePublished": "2026-09-10T09:00:00+02:00",
+  "dateModified": "2026-09-10T09:00:00+02:00",
+  "articleSection": "Salute e Welfare",
+  "inLanguage": "it-IT",
+  "mainEntityOfPage": "https://www.dynames.it/articles/2026.09.10-riarmo-sanitario.html",
+  "image": [
+    "https://www.dynames.it/articles/Immagini/2026.09.10-riarmo-sanitario-light.jpg?v=1",
+    "https://www.dynames.it/articles/Immagini/2026.09.10-riarmo-sanitario.jpg?v=1"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Francesco Bianchi"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DYNAMES",
+    "url": "https://www.dynames.it/"
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root{--night-blue:#0b1120;--slate-grey:#334155;--optical-white:#fff;--text-primary:#1e293b;--text-secondary:#475569;--text-light:#cbd5e1;--paper-bg:#fdfbf7;--gold-accent:#b8935a}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--paper-bg);color:var(--text-primary);font:1.15rem/1.8 'Roboto',sans-serif}
+    h1,h2,h3,h4,.brand{font-family:'Montserrat',sans-serif}.serif-heading{font-family:'Playfair Display',serif}
+    .container{max-width:1200px;margin:0 auto;padding:0 2rem}.article-container{max-width:800px;margin:0 auto;padding:0 2rem}
+    header{position:sticky;top:0;z-index:1000;padding:1rem 0;background:var(--optical-white);border-bottom:2px solid var(--night-blue)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between}.brand a{text-decoration:none}.brand h1{display:flex;align-items:center;gap:10px;color:var(--night-blue);font-size:1.8rem;font-weight:800;letter-spacing:1px}.brand-logo{width:auto;height:40px}.brand p{margin-top:2px;color:var(--slate-grey);font-size:.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+    .desktop-nav{display:flex;align-items:center;gap:2rem}.desktop-nav a{color:var(--night-blue);font:600 .9rem 'Montserrat',sans-serif;letter-spacing:1px;text-decoration:none;text-transform:uppercase}.desktop-nav a:hover,.desktop-nav a.active{color:var(--gold-accent)}
+    .back-nav{padding:2rem 0}.back-nav a{display:inline-flex;color:var(--slate-grey);font:600 .9rem 'Montserrat',sans-serif;letter-spacing:1px;text-decoration:none;text-transform:uppercase}.back-nav a:hover{color:var(--gold-accent)}
+    .article-header{margin-bottom:4rem;text-align:center}.article-category{display:block;margin-bottom:1.25rem;color:var(--gold-accent);font:700 .9rem 'Montserrat',sans-serif;letter-spacing:2px;text-transform:uppercase}.article-title{margin-bottom:1rem;color:var(--night-blue);font-size:3.5rem;line-height:1.1}.article-subtitle{margin-bottom:1.5rem;color:var(--night-blue);font:600 1.25rem/1.45 'Montserrat',sans-serif}.article-abstract{max-width:94%;margin:0 auto 3rem;color:var(--slate-grey);font:italic 1.42rem/1.5 'Playfair Display',serif}.article-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem 1.5rem;color:var(--text-secondary);font:600 .85rem 'Montserrat',sans-serif;text-transform:uppercase}.meta-author{color:var(--night-blue)}
+    .article-figure{max-width:1200px;margin:0 auto 2.25rem;padding:0 2rem}.post-hero-abstract{margin-bottom:3rem}.post-hero-abstract .article-abstract{margin:0 auto}.article-hero{display:block;width:100%;height:62vh;min-height:430px;max-height:720px;object-fit:cover;box-shadow:0 18px 40px rgba(15,23,42,.14)}.article-image-caption{margin-top:.75rem;color:var(--text-secondary);font-size:.82rem;line-height:1.45;text-align:center}
+    .article-body p{margin-bottom:1.7rem;text-align:justify}.article-body h2{margin:3.5rem 0 1.25rem;color:var(--night-blue);font-size:1.8rem;line-height:1.3}.article-lead{font-size:1.08rem;line-height:1.75;color:var(--text-primary)}.pull-quote{margin:3.2rem 0;padding:1.7rem 2rem;border-left:4px solid var(--gold-accent);background:#fff;color:var(--night-blue);font:600 1.55rem/1.45 'Playfair Display',serif}.author-box{display:flex;align-items:center;gap:1.6rem;margin-top:4rem;padding:2.2rem 0;border-top:1px solid #e2e8f0}.author-box img{width:88px;height:88px;border-radius:50%;object-fit:cover;background:#e2e8f0;flex:0 0 88px}.author-info h4{margin-bottom:.5rem;color:var(--night-blue);font-size:1.2rem}.author-info p{margin:0;color:var(--text-secondary);font-size:.95rem;line-height:1.5;text-align:left}
+    footer{margin-top:6rem;padding:3rem 0;background:var(--night-blue);color:var(--text-light);font-size:.9rem;text-align:center}
+    @media(max-width:900px){body{overflow-x:hidden;font-size:1.05rem}.container,.article-container,.article-figure{padding-left:1.5rem;padding-right:1.5rem}.desktop-nav{display:none}.article-title{font-size:2.5rem}.article-subtitle{font-size:1.05rem}.article-abstract{font-size:1.2rem}.article-hero{height:40vh;min-height:280px}.article-body p{text-align:left}.author-box{flex-direction:column;padding:2rem;text-align:center}.author-info p{text-align:center}.pull-quote{font-size:1.35rem}.article-lead{font-size:1rem}}
+  </style>
+</head>
+<body>
+<header>
+<div class="container header-inner">
+<div class="brand">
+<a href="../index.html">
+<h1><img alt="DYNAMES Logo" class="brand-logo" onerror="this.style.display='none'" src="../assets/logo%20DYNAMES%20positivo%20-%20quadrato.png"/>DYNAMES</h1>
+<p>Governance di Forze e Sistemi</p>
+</a>
+</div>
+<nav aria-label="Navigazione principale" class="desktop-nav">
+<a href="../index.html">Home</a>
+<a class="active" href="../hub.html">Analisi &amp; Articoli</a>
+<a href="../pubblicazioni.html">Pubblicazioni</a>
+<a href="../eventi.html">Eventi</a>
+<a href="../chi-siamo.html">Chi siamo</a>
+<a href="../temi-e-collaborazioni.html">Temi e collaborazioni</a>
+</nav>
+</div>
+</header>
+<div class="container back-nav">
+<a href="../hub.html">← Torna all'Hub</a>
+</div>
+<main>
+<article>
+<div class="article-container article-header"><span class="article-category">Salute e Welfare</span><h1 class="serif-heading article-title">Scorte, non solo fabbriche: il riarmo sanitario invisibile dell’Europa</h1><p class="article-subtitle">Dalla produzione al last mile: perché l’autonomia farmaceutica europea passa sempre più anche da scorte strategiche, capacità produttiva riservata e logistica di crisi.</p><div class="article-meta"><a class="meta-author" href="../chi-siamo.html#bianchi">Francesco Bianchi</a><time datetime="2026-09-10">10 Settembre 2026</time><span>Tempo di lettura: 8 min</span></div></div>
+<figure class="article-figure"><img alt="Scorte farmaceutiche strategiche europee, capacità produttiva riservata e logistica di crisi" class="article-hero" decoding="async" fetchpriority="high" height="941" onerror="this.closest('figure').style.display='none'" src="Immagini/2026.09.10-riarmo-sanitario.jpg?v=1" width="1672"/><figcaption class="article-image-caption">Dalla produzione al last mile: scorte strategiche, capacità produttiva riservata e logistica di crisi come componenti della preparedness europea. Elaborazione editoriale DYNAMES.</figcaption></figure><div class="article-container post-hero-abstract"><p class="article-abstract">L’autonomia farmaceutica europea passa anche da scorte strategiche, capacità produttiva riservata, logistica di crisi e rapidità di deployment.</p></div>
+<div class="article-container article-body"><p class="article-lead">Quando si parla di autonomia farmaceutica europea, la domanda è quasi sempre la stessa: dove vengono prodotti i farmaci?</p><p>È una domanda importante, ma non sufficiente.</p><p>Durante una crisi può essercene una ancora più urgente: dove si trovano, in quel momento, i medicinali che servono e quanto tempo occorre per renderli realmente disponibili?</p><p>Una fabbrica sul territorio europeo può ridurre una dipendenza strategica. Non garantisce però che un vaccino, un antibiotico o un antidoto siano disponibili nelle prime ore o nei primi giorni di un’emergenza. Tra capacità produttiva e capacità operativa esiste una catena più lunga: prevedere il bisogno, assicurarsi l’accesso al prodotto, conservarlo, mantenerlo utilizzabile, trasportarlo e distribuirlo.</p><p>È in questo spazio, meno visibile delle fabbriche ma altrettanto strategico, che l’Unione europea sta cercando di rafforzare una nuova componente della propria preparedness.</p><h2>Dalla produzione alla disponibilità</h2><p>Il passaggio è diventato particolarmente evidente il 9 luglio 2025, quando la Commissione europea ha adottato insieme la EU Stockpiling Strategy e la Medical Countermeasures Strategy.</p><p>La novità non è che l’Europa abbia improvvisamente iniziato a fare scorte. Riserve nazionali, meccanismi di procurement e capacità rescEU esistevano già. La novità sta nel tentativo di ricondurre strumenti differenti dentro una logica più integrata, che colleghi valutazione delle minacce, produzione, approvvigionamento, stockpiling e deployment.</p><p>La Medical Countermeasures Strategy riguarda vaccini, terapie, diagnostici, dispositivi e altre contromisure necessarie contro pandemie, resistenza antimicrobica, minacce CBRN e scenari connessi ai conflitti. L’obiettivo dichiarato è garantirne non soltanto lo sviluppo, ma accesso, disponibilità e rapido impiego.</p><p>La stessa Stockpiling Strategy compie un passaggio ancora più esplicito: considera lo stockpiling parte della preparedness dell’Unione e, insieme, della sua capacità di deterrenza e readiness rispetto a scenari di conflitto. Nello stesso documento, però, la Commissione riconosce che l’approccio europeo resta frammentato e che manca ancora una visione completa delle scorte e delle capacità disponibili nei diversi Stati.</p><p>È questa tensione a rendere il tema interessante: non stiamo osservando un sistema già compiuto, ma il tentativo di trasformare capacità disperse in una readiness più propriamente europea.</p><h2>Una capacità europea, ma distribuita</h2><p>La manifestazione più concreta di questo sistema è rescEU, la riserva strategica inserita nel Meccanismo unionale di protezione civile.</p><p>All’11 agosto 2026 risultavano in sviluppo 22 stockpile medicali e CBRN in 16 Stati membri, 17 dei quali pienamente operativi. Possono comprendere terapeutici, vaccini, dispositivi medici, dispositivi di protezione e specifiche contromisure contro minacce chimiche, biologiche, radiologiche e nucleari. Nel piano strategico del 2025, la Commissione indicava circa 1,65 miliardi di euro investiti nella costruzione di queste capacità.</p><p>Ma “riserva europea” non significa un gigantesco deposito controllato direttamente da Bruxelles.</p><p>Nel modello finora utilizzato, gli stockpile sono finanziati dall’Unione ma collocati e gestiti negli Stati membri attraverso grant; i beneficiari nazionali acquistano e gestiscono materialmente le scorte. Quando una richiesta di assistenza non può essere soddisfatta dalle capacità disponibili degli Stati, la Commissione, attraverso l’Emergency Response Coordination Centre (ERCC), può decidere il deployment delle capacità rescEU secondo le procedure previste dal Meccanismo.</p><p>È quindi una capacità europea distribuita territorialmente e governata su più livelli.</p><p>Questa architettura ha un vantaggio evidente: permette di sfruttare infrastrutture già presenti sul territorio. Ma introduce anche una difficoltà strategica: per mobilitare rapidamente le risorse bisogna sapere cosa esiste, dove si trova e in quali condizioni può essere utilizzato.</p><h2>Il magazzino potrebbe non essere un magazzino</h2><p>C’è poi un problema specificamente farmaceutico: i medicinali scadono.</p><p>Vaccini, antidoti e altri prodotti possono richiedere temperatura controllata, monitoraggio regolatorio, sostituzioni periodiche e sistemi di rotazione. Accumulare sempre più confezioni non equivale quindi automaticamente a diventare più resilienti.</p><p>Per questo il piano europeo prende in considerazione forme di stockpiling meno intuitive: materie prime, eccipienti, principi attivi farmaceutici, intermedi e prodotti bulk, da combinare con capacità produttive flessibili. Per alcuni API, la Commissione osserva che, a seconda della sostanza e in condizioni ottimali, la stabilità fisico-chimica può arrivare fino a vent’anni. L’idea è associare questa maggiore conservabilità a piattaforme produttive modulari capaci di trasformare rapidamente l’intermedio in prodotto finito.</p><p>È una concezione significativamente diversa dalla semplice riserva di confezioni finite.</p><p>Lo stesso vale per il rapporto con l’industria. La strategia europea contempla capacità produttive riservate, attivabili rapidamente in emergenza, mentre il piano sullo stockpiling considera anche modelli di Vendor Managed Inventory: una quantità prestabilita rimane presso il produttore, viene gestita nel rispetto dei requisiti regolatori e può essere ruotata attraverso il normale circuito distributivo, limitando il rischio di scadenza e distruzione.</p><p>Il confine tra “fabbrica” e “scorta” diventa così meno netto.</p><p>La capacità strategica può essere un prodotto già disponibile, ma anche un principio attivo, una linea produttiva prenotata o un contratto capace di trasformarsi rapidamente in fornitura.</p><h2>Dal deposito al paziente</h2><p>Rimane però il problema decisivo: la mobilitazione.</p><p>Nell’agosto 2022, mentre aumentavano i timori legati alla centrale nucleare di Zaporizhzhia, il governo ucraino richiese ioduro di potassio come misura preventiva in caso di esposizione a iodio radioattivo. L’ERCC mobilitò attraverso il Meccanismo unionale di protezione civile 5,5 milioni di compresse: cinque milioni provenienti dalla riserva rescEU ospitata in Germania e 500.000 dall’Austria.</p><p>Il dato numerico è meno importante della sequenza che rende visibile:</p><p>minaccia, richiesta, individuazione della riserva, decisione, mobilitazione, trasporto.</p><p>Il caso mostra che il valore dello stockpile non risiede soltanto nel bene conservato, ma nell’esistenza preventiva di una catena decisionale e logistica capace di metterlo in movimento.</p><p>Ed è proprio dopo l’apertura del magazzino che iniziano alcuni dei problemi più complessi: cold chain, trasporto, tracciabilità, autorizzazioni, capacità locali di ricezione e distribuzione.</p><p>La Commissione considera ormai questa dimensione parte integrante della preparedness. La Medical Countermeasures Strategy attribuisce all’ERCC un ruolo nel coordinamento del deployment e arriva a prevedere, per determinate situazioni, cooperazione con le forze armate, tecnologie come i droni e l’impiego della logistica militare per il trasporto rapido e sicuro delle contromisure.</p><h2>La salute come infrastruttura di resilienza</h2><p>È qui che il tema sanitario incrocia direttamente quello della sicurezza.</p><p>La Medical Countermeasures Strategy osserva che le contromisure necessarie negli ospedali civili e quelle richieste sul fronte possono spesso coincidere. Per questo la Commissione individua proprio nelle medical countermeasures uno dei settori con maggiore potenziale per la cooperazione civile-militare, dal procurement allo stockpiling fino alla logistica e al deployment.</p><p>La questione diventa particolarmente rilevante in uno scenario di crisi ad alta intensità.</p><p>Sangue, antibiotici, antidoti, dispositivi, capacità chirurgica e posti letto potrebbero essere richiesti contemporaneamente dal sistema sanitario civile e da quello militare. La domanda militare non sostituirebbe quella civile: vi si sovrapporrebbe.</p><p>Il problema non sarebbe più soltanto la disponibilità, ma l’allocazione di risorse scarse.</p><p>Anche la NATO include tra i propri requisiti fondamentali di resilienza la capacità di affrontare mass casualties e disruptive health crises, chiedendo che i sistemi sanitari civili possano reggere e che esistano forniture mediche sufficienti, disponibili e protette.</p><p>È in questo senso che l’espressione “riarmo sanitario” può essere utile, purché non venga confusa con una militarizzazione della sanità.</p><p>Ciò che sta cambiando è piuttosto il ruolo attribuito alla capacità sanitaria: da settore prevalentemente assistenziale a infrastruttura necessaria alla continuità dello Stato e alla resilienza della società anche durante una crisi di sicurezza.</p><h2>Il paradosso delle scorte nazionali</h2><p>Più stock, tuttavia, non significa automaticamente maggiore sicurezza.</p><p>La Corte dei conti europea ha mostrato quanto fossero differenti, alla fine del 2024, le politiche nazionali. La Danimarca richiedeva sei settimane di scorte per 581 medicinali critici; l’Austria circa quattro mesi per circa 400 medicinali essenziali; la Germania fino a sei mesi per alcune categorie, mentre la Francia utilizzava requisiti differenziati.</p><p>Queste misure possono proteggere il singolo Stato, ma hanno anche la capacità di spostare il problema oltre confine.</p><p>Se più governi impongono contemporaneamente alle imprese di trattenere elevate quantità degli stessi medicinali, i produttori possono trovarsi a distribuire una capacità limitata tra diversi mercati. La Corte avverte infatti che lo stockpiling unilaterale può creare o aggravare shortage negli altri Stati membri, soprattutto quelli più piccoli.</p><p>Il caso danese è particolarmente istruttivo. La proposta iniziale riguardava 924 medicinali; la Commissione chiese di ridurre la lista a 400–600 e di estendere da tre a sei mesi il periodo di costituzione delle riserve, con l’obiettivo di limitare gli effetti sul mercato comune.</p><p>È un paradosso tipicamente europeo:</p><p>ventisette strategie nazionali di resilienza non producono automaticamente una strategia europea di resilienza.</p><p>Possono, al contrario, entrare in conflitto.</p><h2>Il problema invisibile: sapere cosa possiedono gli altri</h2><p>La difficoltà non è soltanto commerciale.</p><p>Per dimensionare una riserva europea occorre conoscere ciò che è già disponibile a livello nazionale. E proprio qui emerge un problema meno visibile: l’informazione.</p><p>Il piano europeo riconosce che gli Stati sono cauti nel condividere dati sensibili sulle proprie capacità per ragioni di sicurezza, mentre le imprese possono essere riluttanti a comunicare livelli di inventario e informazioni sulle supply chain per ragioni competitive. La Commissione stessa collega questa incompletezza informativa al rischio di ulteriore frammentazione.</p><p>Lo stockpiling diventa così anche una questione di sovranità informativa.</p><p>Sapere dove sono collocati determinati antidoti, quante unità siano disponibili, quali capacità possano essere mobilitate e quanto rapidamente non è un semplice dato amministrativo. In alcuni scenari è informazione strategica.</p><p>La domanda, allora, non è soltanto quanto gli Stati siano disposti a europeizzare le proprie riserve.</p><p>È quanto siano disposti a europeizzare la conoscenza delle proprie vulnerabilità e capacità.</p><h2>L’autonomia è una capacità</h2><p>Per anni il dibattito sull’autonomia farmaceutica europea si è concentrato soprattutto sulla geografia della produzione: riportare capacità industriali nell’Unione, diversificare i fornitori, ridurre le dipendenze.</p><p>Resta essenziale.</p><p>Ma una crisi pone una domanda differente.</p><p>Non chiede soltanto se l’Europa sappia produrre una determinata contromisura. Chiede se sappia renderla disponibile prima che sia troppo tardi.</p><p>Fabbriche, materie prime, stockpile, procurement, capacità produttiva riservata e logistica non sono quindi politiche concorrenti. Sono parti della stessa infrastruttura di readiness.</p><p>Ed è probabilmente qui che si trova il significato più concreto del riarmo sanitario invisibile dell’Europa: non in un unico arsenale farmaceutico europeo, ma in una rete distribuita di prodotti, capacità industriali, informazioni e strumenti logistici progettati per trasformarsi rapidamente in risposta.</p><p>Perché, nel momento dell’emergenza, l’autonomia non si misura soltanto da ciò che un continente è in grado di produrre.</p><p>Si misura da ciò che è in grado di mettere in uso, in tempo. Una scorta che non può essere mobilitata in tempo non è ancora una capacità strategica.</p><aside class="author-box"><img alt="Francesco Bianchi" decoding="async" loading="lazy" onerror="this.style.display='none';" src="../assets/immagini-chi-siamo/francesco-bianchi.jpg"/><div class="author-info"><h4><a href="../chi-siamo.html#bianchi">Francesco Bianchi</a></h4><p>Laureato in Chimica e Tecnologie Farmaceutiche, approfondisce regolazione farmaceutica, governance sanitaria e accesso all’innovazione terapeutica. I suoi interessi riguardano politiche sanitarie, market access, sostenibilità dei sistemi di welfare e ruolo strategico della sanità negli equilibri economici, sociali e geopolitici.</p></div></aside></div>
+</article>
+</main>
+<footer>
+<div class="container">
+<p>Iscrizione Registro degli Operatori di Comunicazione e Postali n° 44335 a favore di FONDAZIONE BOSCACCI ETS</p>
+<p>© 2026 DYNAMES. Tutti i diritti riservati.</p>
+</div>
+</footer>
+</body>
+</html>
